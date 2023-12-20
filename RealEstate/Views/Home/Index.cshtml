@@ -1,0 +1,114 @@
+﻿<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Doughnut Chart</h6>
+                <canvas id="doughnut-chart"></canvas>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Doughnut Chart</h6>
+                <canvas id="doughnut-chart2"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Widgets Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-md-6 col-xl-6">
+            <div class="h-100 bg-secondary rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Takvim</h6>
+                </div>
+                <div id="calender"></div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-xl-6">
+            <div class="h-100 bg-secondary rounded p-4" id="taskList">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Yapılacaklar listesi</h6>
+                </div>
+                <div class="d-flex mb-2">
+                    <input class="form-control border-0" type="text" id="taskInput" placeholder="Yeni görev giriniz">
+                    <button type="button" id="addTask" class="btn btn-primary ms-2">Ekle</button>
+                </div>
+                <div class="d-flex align-items-center border-bottom py-2">
+                    <input class="form-check-input m-0" type="checkbox">
+                    <div class="w-100 ms-3">
+                        <div class="d-flex w-100 align-items-center justify-content-between">
+                            <span>Short task goes here...</span>
+                            <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center border-bottom py-2">
+                    <input class="form-check-input m-0" type="checkbox">
+                    <div class="w-100 ms-3">
+                        <div class="d-flex w-100 align-items-center justify-content-between">
+                            <span>Short task goes here...</span>
+                            <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center border-bottom py-2">
+                    <input class="form-check-input m-0" type="checkbox">
+                    <div class="w-100 ms-3">
+                        <div class="d-flex w-100 align-items-center justify-content-between">
+                            <span>Short task goes here...</span>
+                            <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center border-bottom py-2">
+                    <input class="form-check-input m-0" type="checkbox">
+                    <div class="w-100 ms-3">
+                        <div class="d-flex w-100 align-items-center justify-content-between">
+                            <span>Short task goes here...</span>
+                            <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Widgets End -->
+<script>
+    $("#navHome").addClass("active");
+
+    $("#addTask").click(()=>{
+        var html=$("#taskList").html();
+        var taskInput = $("#taskInput").val();
+        $("#taskList").html(html+`
+            <div class="d-flex align-items-center border-bottom py-2">
+                    <input class="form-check-input m-0" type="checkbox">
+                    <div class="w-100 ms-3">
+                        <div class="d-flex w-100 align-items-center justify-content-between">
+                            <span>${taskInput}</span>
+                            <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+        `)
+    });
+
+    $("#taskList input:checkbox").change((e)=>{
+        var checkbox = e.target;
+        var parent = checkbox.parentNode;
+        var spanElement = parent.lastElementChild.firstElementChild.firstElementChild;
+        var html = spanElement.innerHTML;
+        if(checkbox.checked){
+            spanElement.innerHTML=`
+                <del>${html}</del>
+            `;
+        }
+        else{
+            var content = spanElement.firstElementChild.innerHTML;
+            spanElement.innerHTML=content;
+        }
+    })
+</script>
