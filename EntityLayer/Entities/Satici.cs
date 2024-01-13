@@ -2,10 +2,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataAccessLayer;
+namespace EntityLayer.Entities;
 
 public partial class Satici
 {
+    public Satici()
+    {
+        Ilanlar = new List<Ilan>();
+    }
     public string Id { get; set; }
     public string AdSoyad { get; set; }
     public string TelefonNo { get; set; }

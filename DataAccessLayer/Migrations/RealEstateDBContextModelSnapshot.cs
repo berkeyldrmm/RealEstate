@@ -22,7 +22,7 @@ namespace DataAccessLayer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DataAccessLayer.Alici", b =>
+            modelBuilder.Entity("EntityLayer.Entities.Alici", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(50)
@@ -44,257 +44,71 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("TelefonNo.");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Alicilar", (string)null);
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Arsa", b =>
+            modelBuilder.Entity("EntityLayer.Entities.Ilan", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("AdaNo")
-                        .HasColumnType("int")
-                        .HasColumnName("AdaNo.");
+                    b.Property<string>("Detaylar")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Fiyat")
-                        .HasColumnType("decimal(18, 0)");
-
-                    b.Property<bool>("ImarDurumu")
-                        .HasColumnType("bit")
-                        .HasColumnName("Imar durumu");
-
-                    b.Property<bool>("KatKarsiliginaUygun")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Kimden")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("KrediyeUygun")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Metrekare")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("MetrekareFiyat")
-                        .HasColumnType("decimal(18, 0)");
-
-                    b.Property<int>("PaftaNo")
-                        .HasColumnType("int")
-                        .HasColumnName("PaftaNo.");
-
-                    b.Property<int>("ParselNo")
-                        .HasColumnType("int")
-                        .HasColumnName("ParselNo.");
-
-                    b.Property<string>("SatilikKiralik")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Arsa", (string)null);
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Daire", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("Aidat")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("Asansor")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("BalkonSayisi")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("BanyoSayisi")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("BinaYasi")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("BulunduguKat")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("EsyaliMi")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Fiyat")
-                        .HasColumnType("decimal(18, 0)");
-
-                    b.Property<string>("Isıtma")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("KatSayisi")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("KrediyeUygun")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("KullanimDurumu")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("MetrekareBrut")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MetrekareNet")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OdaSayisi")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("Otopark")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SatilikKiralik")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool?>("SiteMi")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Daire", (string)null);
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Depo", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("AdaNo")
-                        .HasColumnType("int")
-                        .HasColumnName("AdaNo.");
-
-                    b.Property<decimal>("Fiyat")
-                        .HasColumnType("decimal(18, 0)");
-
-                    b.Property<int>("Metrekare")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MetrekareFiyat")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ParselNo")
-                        .HasColumnType("int")
-                        .HasColumnName("ParselNo.");
-
-                    b.Property<string>("SatilikKiralik")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Depo", (string)null);
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Dukkan", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("Aidat")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("Asansor")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("BalkonSayisi")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("BanyoSayisi")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BinaYasi")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("BulunduguKat")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("EsyaliMi")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Fiyat")
-                        .HasColumnType("decimal(18, 0)");
-
-                    b.Property<string>("Isıtma")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("KatSayisi")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("KrediyeUygun")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("KullanimDurumu")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("MetrekareBrut")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MetrekareNet")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OdaSayisi")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("Otopark")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SatilikKiralik")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool?>("SiteMi")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Dukkan", (string)null);
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Ilan", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<decimal>("Fiyat")
+                    b.Property<decimal>("IlanFiyati")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("IlanTipi")
+                    b.Property<int>("IlanTalepTipiId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Satici")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("KayitTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Kazanc")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Komisyon")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PortfoyFiyati")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("SaticiId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("SatilikMiKiralikMi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SatisDurumu")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IlanTalepTipiId");
+
+                    b.HasIndex("SaticiId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Ilanlar", (string)null);
                 });
 
-            modelBuilder.Entity("DataAccessLayer.IlanTalepTipi", b =>
+            modelBuilder.Entity("EntityLayer.Entities.IlanTalepTipi", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -313,97 +127,28 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("IlanTalepTipleri", (string)null);
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Satici", b =>
+            modelBuilder.Entity("EntityLayer.Entities.Portfoy", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("AdSoyad")
+                    b.Property<string>("MetrekareNet")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MailAdresi")
-                        .IsRequired()
-                        .HasMaxLength(50)
+                    b.Property<string>("TalepId")
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("TelefonNo")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("TelefonNo.");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Saticilar", (string)null);
-                });
+                    b.HasIndex("TalepId")
+                        .IsUnique()
+                        .HasFilter("[TalepId] IS NOT NULL");
 
-            modelBuilder.Entity("DataAccessLayer.Talep", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.ToTable("Portfoy");
 
-                    b.Property<int>("Alici")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("MaxFiyat")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("MinFiyat")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("TalepTipi")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Talepler", (string)null);
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Tarla", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("AdaNo")
-                        .HasColumnType("int")
-                        .HasColumnName("AdaNo.");
-
-                    b.Property<bool>("ImarDurumu")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("KrediyeUygun")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Metrekare")
-                        .HasColumnType("int");
-
-                    b.Property<decimal?>("MetrekareFiyat")
-                        .HasColumnType("decimal(18, 0)");
-
-                    b.Property<int>("PafaNo")
-                        .HasColumnType("int")
-                        .HasColumnName("PafaNo.");
-
-                    b.Property<int>("ParselNo")
-                        .HasColumnType("int")
-                        .HasColumnName("ParselNo.");
-
-                    b.Property<string>("SatilikKiralik")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("TapuDurumu")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tarla", (string)null);
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("EntityLayer.Entities.Role", b =>
@@ -433,6 +178,83 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
+            modelBuilder.Entity("EntityLayer.Entities.Satici", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("AdSoyad")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("MailAdresi")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("TelefonNo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("TelefonNo.");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Saticilar", (string)null);
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Talep", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("AliciId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("IlanTalepTipiId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("KayitTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("MaxFiyat")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MinFiyat")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("PortfoyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SatilikMiKiralikMi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AliciId");
+
+                    b.HasIndex("IlanTalepTipiId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Talepler", (string)null);
+                });
+
             modelBuilder.Entity("EntityLayer.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -457,6 +279,10 @@ namespace DataAccessLayer.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NameSurname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -604,6 +430,301 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("EntityLayer.Entities.Arsa", b =>
+                {
+                    b.HasBaseType("EntityLayer.Entities.Portfoy");
+
+                    b.Property<string>("AdaNo")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("AdaNo.");
+
+                    b.Property<bool>("ImarDurumu")
+                        .HasColumnType("bit")
+                        .HasColumnName("Imar durumu");
+
+                    b.Property<bool>("KatKarsiliginaUygun")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal?>("MetrekareFiyat")
+                        .HasColumnType("decimal(18, 0)");
+
+                    b.Property<string>("PaftaNo")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("PaftaNo.");
+
+                    b.Property<string>("ParselNo")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ParselNo.");
+
+                    b.Property<bool>("TapuDurumu")
+                        .HasColumnType("bit");
+
+                    b.ToTable("Arsa", (string)null);
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Daire", b =>
+                {
+                    b.HasBaseType("EntityLayer.Entities.Portfoy");
+
+                    b.Property<string>("AdaNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Aidat")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("Asansor")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("BalkonSayisi")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BanyoSayisi")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BinaYasi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("BulunduguKat")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("EsyaliMi")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Isıtma")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("KatSayisi")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("KrediyeUygun")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("KullanimDurumu")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("MetrekareBrut")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("MetrekareFiyat")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("OdaSayisi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Otopark")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ParselNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("SiteMi")
+                        .HasColumnType("bit");
+
+                    b.ToTable("Daire", (string)null);
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Depo", b =>
+                {
+                    b.HasBaseType("EntityLayer.Entities.Portfoy");
+
+                    b.Property<string>("AdaNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("AdaNo.");
+
+                    b.Property<decimal?>("MetrekareFiyat")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ParselNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ParselNo.");
+
+                    b.ToTable("Depo", (string)null);
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Dukkan", b =>
+                {
+                    b.HasBaseType("EntityLayer.Entities.Portfoy");
+
+                    b.Property<string>("AdaNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Aidat")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("Asansor")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("BinaYasi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("BulunduguKat")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("EsyaliMi")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Isıtma")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("KatSayisi")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("KrediyeUygun")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("KullanimDurumu")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("MetrekareBrut")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("MetrekareFiyat")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("OdaSayisi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Otopark")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ParselNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Dukkan", (string)null);
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Tarla", b =>
+                {
+                    b.HasBaseType("EntityLayer.Entities.Portfoy");
+
+                    b.Property<string>("AdaNo")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("AdaNo.");
+
+                    b.Property<bool>("ImarDurumu")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal?>("MetrekareFiyat")
+                        .HasColumnType("decimal(18, 0)");
+
+                    b.Property<string>("PaftaNo")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("PaftaNo.");
+
+                    b.Property<string>("ParselNo")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ParselNo.");
+
+                    b.Property<bool>("TapuDurumu")
+                        .HasColumnType("bit");
+
+                    b.ToTable("Tarla", (string)null);
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Alici", b =>
+                {
+                    b.HasOne("EntityLayer.Entities.User", "User")
+                        .WithMany("Alicilar")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Ilan", b =>
+                {
+                    b.HasOne("EntityLayer.Entities.IlanTalepTipi", "IlanTalepTipi")
+                        .WithMany("Ilanlar")
+                        .HasForeignKey("IlanTalepTipiId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Entities.Satici", "Satici")
+                        .WithMany("Ilanlar")
+                        .HasForeignKey("SaticiId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Entities.User", "User")
+                        .WithMany("Ilanlar")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IlanTalepTipi");
+
+                    b.Navigation("Satici");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Portfoy", b =>
+                {
+                    b.HasOne("EntityLayer.Entities.Ilan", "Ilan")
+                        .WithOne("Portfoy")
+                        .HasForeignKey("EntityLayer.Entities.Portfoy", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Entities.Talep", "Talep")
+                        .WithOne("Portfoy")
+                        .HasForeignKey("EntityLayer.Entities.Portfoy", "TalepId");
+
+                    b.Navigation("Ilan");
+
+                    b.Navigation("Talep");
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Satici", b =>
+                {
+                    b.HasOne("EntityLayer.Entities.User", "User")
+                        .WithMany("Saticilar")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Talep", b =>
+                {
+                    b.HasOne("EntityLayer.Entities.Alici", "Alici")
+                        .WithMany("Talepler")
+                        .HasForeignKey("AliciId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Entities.IlanTalepTipi", "IlanTalepTipi")
+                        .WithMany("Talepler")
+                        .HasForeignKey("IlanTalepTipiId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Entities.User", "User")
+                        .WithMany("Talepler")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Alici");
+
+                    b.Navigation("IlanTalepTipi");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("EntityLayer.Entities.Role", null)
@@ -653,6 +774,91 @@ namespace DataAccessLayer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Arsa", b =>
+                {
+                    b.HasOne("EntityLayer.Entities.Portfoy", null)
+                        .WithOne()
+                        .HasForeignKey("EntityLayer.Entities.Arsa", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Daire", b =>
+                {
+                    b.HasOne("EntityLayer.Entities.Portfoy", null)
+                        .WithOne()
+                        .HasForeignKey("EntityLayer.Entities.Daire", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Depo", b =>
+                {
+                    b.HasOne("EntityLayer.Entities.Portfoy", null)
+                        .WithOne()
+                        .HasForeignKey("EntityLayer.Entities.Depo", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Dukkan", b =>
+                {
+                    b.HasOne("EntityLayer.Entities.Portfoy", null)
+                        .WithOne()
+                        .HasForeignKey("EntityLayer.Entities.Dukkan", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Tarla", b =>
+                {
+                    b.HasOne("EntityLayer.Entities.Portfoy", null)
+                        .WithOne()
+                        .HasForeignKey("EntityLayer.Entities.Tarla", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Alici", b =>
+                {
+                    b.Navigation("Talepler");
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Ilan", b =>
+                {
+                    b.Navigation("Portfoy")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.IlanTalepTipi", b =>
+                {
+                    b.Navigation("Ilanlar");
+
+                    b.Navigation("Talepler");
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Satici", b =>
+                {
+                    b.Navigation("Ilanlar");
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.Talep", b =>
+                {
+                    b.Navigation("Portfoy")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EntityLayer.Entities.User", b =>
+                {
+                    b.Navigation("Alicilar");
+
+                    b.Navigation("Ilanlar");
+
+                    b.Navigation("Saticilar");
+
+                    b.Navigation("Talepler");
                 });
 #pragma warning restore 612, 618
         }

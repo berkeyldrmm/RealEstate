@@ -1,12 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusinessLayer.Abstract;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RealEstate.Controllers
 {
     public class SaticilarController : Controller
     {
-        public IActionResult Index()
+        private readonly ISaticiService _saticiService;
+
+        public SaticilarController(ISaticiService saticiService)
         {
-            return View();
+            _saticiService = saticiService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var saticilar = await _saticiService.GetAll();
+            return View(saticilar);
         }
     }
 }

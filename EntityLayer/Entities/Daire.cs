@@ -1,16 +1,17 @@
-﻿using EntityLayer.Abstract;
+﻿
 using System;
 using System.Collections.Generic;
 
-namespace DataAccessLayer;
+namespace EntityLayer.Entities;
 
-public partial class Daire : IPortfoy
+public partial class Daire : Portfoy
 {
-    public string Id { get; set; }
     public int? MetrekareBrut { get; set; }
-    public int MetrekareNet { get; set; }
-    public int OdaSayisi { get; set; }
-    public int? BinaYasi { get; set; }
+    public decimal? MetrekareFiyat { get; set; }
+    public string? AdaNo { get; set; }
+    public string? ParselNo { get; set; }
+    public string OdaSayisi { get; set; }
+    public string? BinaYasi { get; set; }
     public int? BulunduguKat { get; set; }
     public int? KatSayisi { get; set; }
     public string Isıtma { get; set; }
@@ -23,6 +24,4 @@ public partial class Daire : IPortfoy
     public bool? SiteMi { get; set; }
     public bool? KrediyeUygun { get; set; }
     public int Aidat { get; set; }
-    public decimal Fiyat { get; set; }
-    public string SatilikKiralik { get; set; }
 }

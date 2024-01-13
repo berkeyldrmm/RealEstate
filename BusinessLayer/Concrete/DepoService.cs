@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer;
 using DataAccessLayer.Abstract;
+using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,14 +34,14 @@ namespace BusinessLayer.Concrete
             return _depoRepository.ReadAll();
         }
 
-        public Task<Depo> GetOne(int id)
+        public Task<Depo> GetOne(string id)
         {
             return _depoRepository.Read(id);
         }
 
-        public Task<bool> Insert(Depo item)
+        public async Task<bool> Insert(Depo item)
         {
-            return _depoRepository.Insert(item);
+            return await _depoRepository.Insert(item);
         }
 
         public Task<bool> Update(Depo item)

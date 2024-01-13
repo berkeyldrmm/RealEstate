@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer;
 using DataAccessLayer.Abstract;
+using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,14 +34,14 @@ namespace BusinessLayer.Concrete
             return _daireRepository.ReadAll();
         }
 
-        public Task<Daire> GetOne(int id)
+        public Task<Daire> GetOne(string id)
         {
             return _daireRepository.Read(id);
         }
 
-        public Task<bool> Insert(Daire item)
+        public async Task<bool> Insert(Daire item)
         {
-            return _daireRepository.Insert(item);
+            return await _daireRepository.Insert(item);
         }
 
         public Task<bool> Update(Daire item)

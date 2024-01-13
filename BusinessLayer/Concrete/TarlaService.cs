@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer;
 using DataAccessLayer.Abstract;
+using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,14 +34,14 @@ namespace BusinessLayer.Concrete
             return _tarlaRepository.ReadAll();
         }
 
-        public Task<Tarla> GetOne(int id)
+        public Task<Tarla> GetOne(string id)
         {
             return _tarlaRepository.Read(id);
         }
 
-        public Task<bool> Insert(Tarla item)
+        public async Task<bool> Insert(Tarla item)
         {
-            return _tarlaRepository.Insert(item);
+            return await _tarlaRepository.Insert(item);
         }
 
         public Task<bool> Update(Tarla item)

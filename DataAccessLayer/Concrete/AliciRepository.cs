@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Abstract;
 using DataAccessLayer.Context;
+using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

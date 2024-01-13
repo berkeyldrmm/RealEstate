@@ -1,6 +1,12 @@
-﻿using DataAccessLayer.Context;
+﻿using BusinessLayer.Validation.Concrete;
+using DataAccessLayer.Context;
+using DTOLayer;
 using EntityLayer.Entities;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RealEstate.Models;
@@ -25,7 +31,7 @@ namespace RealEstate.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index([FromForm] LoginModel model)
+        public async Task<IActionResult> Index([FromForm] LoginModelDTO model)
         {
             if(ModelState.IsValid)
             {
@@ -36,9 +42,10 @@ namespace RealEstate.Controllers
                     return View();
                 }
 
-                var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, true);
-                if(result.Succeeded)
+                var result2 = await _signInManager.PasswordSignInAsync(user, model.Sifre, model.RememberMe, true);
+                if(result2.Succeeded)
                 {
+                    ViewBag.nameSurname = user.NameSurname;
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -49,5 +56,16 @@ namespace RealEstate.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<string> getNameSurname()
+        {
+            User user = await _userManager.FindByNameAsync(User.Identity.Name);
+            return user.NameSurname;
+        }
     }
 }

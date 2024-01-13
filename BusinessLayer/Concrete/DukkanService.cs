@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer;
 using DataAccessLayer.Abstract;
+using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,14 +34,14 @@ namespace BusinessLayer.Concrete
             return _dukkanRepository.ReadAll();
         }
 
-        public Task<Dukkan> GetOne(int id)
+        public Task<Dukkan> GetOne(string id)
         {
             return _dukkanRepository.Read(id);
         }
 
-        public Task<bool> Insert(Dukkan item)
+        public async Task<bool> Insert(Dukkan item)
         {
-            return _dukkanRepository.Insert(item);
+            return await _dukkanRepository.Insert(item);
         }
 
         public Task<bool> Update(Dukkan item)

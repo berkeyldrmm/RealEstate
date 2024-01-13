@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataAccessLayer;
+namespace EntityLayer.Entities;
 
 public partial class IlanTalepTipi
 {
+    public IlanTalepTipi()
+    {
+        Ilanlar = new List<Ilan>();
+        Talepler = new List<Talep>();
+    }
     public int Id { get; set; }
     public string TipAdi { get; set; }
     public int TipNo { get; set; }

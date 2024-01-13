@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer;
 using DataAccessLayer.Abstract;
+using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,14 +34,14 @@ namespace BusinessLayer.Concrete
             return _saticiRepository.ReadAll();
         }
 
-        public Task<Satici> GetOne(int id)
+        public Task<Satici> GetOne(string id)
         {
             return _saticiRepository.Read(id);
         }
 
-        public Task<bool> Insert(Satici item)
+        public async Task<bool> Insert(Satici item)
         {
-            return _saticiRepository.Insert(item);
+            return await _saticiRepository.Insert(item);
         }
 
         public Task<bool> Update(Satici item)

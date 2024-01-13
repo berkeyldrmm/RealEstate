@@ -2,10 +2,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataAccessLayer;
+namespace EntityLayer.Entities;
 
 public partial class Alici
 {
+    public Alici()
+    {
+        Talepler = new List<Talep>();
+    }
     public string Id { get; set; }
     public string AdSoyad { get; set; }
     public string MailAdresi { get; set; }

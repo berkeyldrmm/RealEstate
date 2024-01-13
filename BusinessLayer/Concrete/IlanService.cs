@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer;
 using DataAccessLayer.Abstract;
+using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,19 +34,28 @@ namespace BusinessLayer.Concrete
             return _ilanRepository.ReadAll();
         }
 
-        public Task<Ilan> GetOne(int id)
+        public Task<Ilan> GetOne(string id)
         {
             return _ilanRepository.Read(id);
         }
 
-        public Task<bool> Insert(Ilan item)
+        public async Task<bool> Insert(Ilan item)
         {
-            return _ilanRepository.Insert(item);
+            return await _ilanRepository.Insert(item);
         }
 
         public Task<bool> Update(Ilan item)
         {
             return _ilanRepository.Update(item);
+        }
+
+        public async Task<IEnumerable<Ilan>> GetAllWithSatici()
+        {
+            return await _ilanRepository.GetAllWithSatici();
+        }
+        public async Task<Ilan> GetWithSatici(string id)
+        {
+            return await _ilanRepository.GetWithSatici(id);
         }
     }
 }

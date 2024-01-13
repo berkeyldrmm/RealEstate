@@ -1,4 +1,4 @@
-﻿@model RealEstate.Models.LoginModel;
+﻿@model DTOLayer.LoginModelDTO;
 @{
     Layout = null;
 }
@@ -51,20 +51,33 @@
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <a href="index.html" class="">
-                                <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>DarkPan</h3>
+                        @if (ViewBag.error != null)
+                        {
+                            <div id="errorDiv" class="bg-danger">
+                                @ViewBag.error
+                            </div>
+                            <script>
+                                setTimeout(()=>{
+                                    $("#errorDiv").fadeOut();
+                                },2000);
+                            </script>
+                        }
+                        <div class="d-flex flex-column align-items-center justify-content-between mb-3">
+                            <a href="/">
+                                <img width="270" src="~/img/LOGO.png" />
                             </a>
                             <h3>Giriş yapınız</h3>
                         </div>
                         <form method="post">
                             <div class="form-floating mb-3">
-                                <input type="email" asp-for="Mail" class="form-control" id="floatingInput" placeholder="isim@ornek.com">
-                                <label for="floatingInput">Mail adresiniz</label>
+                                <span asp-validation-for="Mail"></span>
+                                <p>Mail adresiniz</p>
+                                <input type="email" asp-for="Mail" class="form-control mb-3" placeholder="isim@ornek.com">
                             </div>
                             <div class="form-floating mb-4">
-                                <input type="password" asp-for="Password" class="form-control" id="floatingPassword" placeholder="Şifre">
-                                <label for="floatingPassword">Şifreniz</label>
+                                <span asp-validation-for="Sifre"></span>
+                                <p>Şifreniz</p>
+                                <input type="password" asp-for="Sifre" class="form-control mb-3" placeholder="Şifre">
                             </div>
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="form-check">
@@ -84,6 +97,8 @@
 
     <!-- JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/chart/chart.min.js"></script>
     <script src="~/lib/easing/easing.min.js"></script>
     <script src="~/lib/waypoints/waypoints.min.js"></script>

@@ -35,7 +35,7 @@ namespace DataAccessLayer.Concrete
             return entityEntry.State == EntityState.Added;
         }
 
-        public async Task<T> Read(int id)
+        public async Task<T> Read(string id)
         {
             return await Entity.FindAsync(id);
         }

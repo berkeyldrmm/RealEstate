@@ -29,6 +29,14 @@
     opacity: 1;
 }
 
+.d-grid .form-group{
+    margin-right:25px;
+    width:18%;
+}
+
+.form-group{
+    margin-top:10px;
+}
 
 /*** Button ***/
 .btn {

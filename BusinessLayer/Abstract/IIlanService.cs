@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer;
+using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,7 @@ namespace BusinessLayer.Abstract
 {
     public interface IIlanService : IGenericService<Ilan>
     {
+        public Task<IEnumerable<Ilan>> GetAllWithSatici();
+        public Task<Ilan> GetWithSatici(string id);
     }
 }

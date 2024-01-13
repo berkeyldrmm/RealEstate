@@ -1,7 +1,9 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
+using BusinessLayer.Validation.Concrete;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete;
+using DTOLayer;
 
 namespace RealEstate.Extensions
 {
@@ -28,6 +30,7 @@ namespace RealEstate.Extensions
             services.AddScoped<ISaticiDal, SaticiRepository>();
             services.AddScoped<ITalepDal, TalepRepository>();
             services.AddScoped<ITarlaDal, TarlaRepository>();
+            services.AddScoped<IPortfoyService, PortfoyService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }

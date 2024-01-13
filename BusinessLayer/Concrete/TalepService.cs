@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer;
 using DataAccessLayer.Abstract;
+using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,14 +34,14 @@ namespace BusinessLayer.Concrete
             return _talepRepository.ReadAll();
         }
 
-        public Task<Talep> GetOne(int id)
+        public Task<Talep> GetOne(string id)
         {
             return _talepRepository.Read(id);
         }
 
-        public Task<bool> Insert(Talep item)
+        public async Task<bool> Insert(Talep item)
         {
-            return _talepRepository.Insert(item);
+            return await _talepRepository.Insert(item);
         }
 
         public Task<bool> Update(Talep item)

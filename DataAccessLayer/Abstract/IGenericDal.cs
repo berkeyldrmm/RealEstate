@@ -8,7 +8,7 @@ namespace DataAccessLayer.Abstract
 {
     public interface IGenericDal<T>
     {
-        Task<T> Read(int id);
+        Task<T> Read(string id);
         Task<IEnumerable<T>> ReadAll();
         Task<bool> Insert(T item);
         Task<bool> Update(T item);

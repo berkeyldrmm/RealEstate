@@ -1,9 +1,13 @@
+using BusinessLayer.Validation.Concrete;
 using DataAccessLayer.Context;
 using EntityLayer.Entities;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using RealEstate.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.DependenciesContainer();
 builder.Services.AddDbContext<RealEstateDBContext>();
+//builder.Services.AddDbContext<RealEstateDBContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:SqlServer"]));
+builder.Services.AddMvc();
+builder.Services.AddFluentValidation().AddValidatorsFromAssemblyContaining<LoginValidation>();
 
 builder.Services.AddAuthentication(
                CookieAuthenticationDefaults.AuthenticationScheme)
@@ -21,14 +28,14 @@ builder.Services.AddAuthentication(
                    x.AccessDeniedPath = "/login";
                });
 
-//builder.Services.AddMvc(config =>
-//{
-//    var policy = new AuthorizationPolicyBuilder()
-//    .RequireAuthenticatedUser()
-//    .Build();
+builder.Services.AddMvc(config =>
+{
+    var policy = new AuthorizationPolicyBuilder()
+    .RequireAuthenticatedUser()
+    .Build();
 
-//    config.Filters.Add(new AuthorizeFilter(policy));
-//});
+    config.Filters.Add(new AuthorizeFilter(policy));
+});
 
 builder.Services.AddIdentity<User, Role>(x =>
 {

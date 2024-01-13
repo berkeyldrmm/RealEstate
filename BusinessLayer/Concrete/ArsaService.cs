@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer;
 using DataAccessLayer.Abstract;
+using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,14 +34,14 @@ namespace BusinessLayer.Concrete
             return _arsaRepository.ReadAll();
         }
 
-        public Task<Arsa> GetOne(int id)
+        public Task<Arsa> GetOne(string id)
         {
             return _arsaRepository.Read(id);
         }
 
-        public Task<bool> Insert(Arsa item)
+        public async Task<bool> Insert(Arsa item)
         {
-            return _arsaRepository.Insert(item);
+            return await _arsaRepository.Insert(item);
         }
 
         public Task<bool> Update(Arsa item)

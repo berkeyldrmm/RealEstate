@@ -1,9 +1,9 @@
-﻿using EntityLayer.Abstract;
+﻿
 using EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace DataAccessLayer;
+namespace EntityLayer.Entities;
 
 public partial class Talep
 {
@@ -16,7 +16,8 @@ public partial class Talep
     public IlanTalepTipi IlanTalepTipi { get; set; }
     public DateTime KayitTarihi { get; set; }
     public int PortfoyId { get; set; }
-    public IPortfoy Portfoy { get; set; }
+    public Portfoy Portfoy { get; set; }
     public string UserId { get; set; }
     public User User { get; set; }
+    public string SatilikMiKiralikMi { get; set; }
 }
