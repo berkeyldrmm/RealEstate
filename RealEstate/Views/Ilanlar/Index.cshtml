@@ -2,44 +2,156 @@
 
 <!-- Recent Sales Start -->
 <div class="container-fluid pt-4 px-4">
-    <div class="bg-secondary text-center rounded p-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">İlanlar</h6>
-            <a href="/ilanlar/ilanekle" class="btn btn-success" style="color:#ffffff"><i class="fa-solid fa-plus"></i> Yeni ilan</a>
-        </div>
-        <div class="table-responsive">
-            <table class="table text-start align-middle table-bordered table-hover mb-0">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Satıcı İsim soyisim</th>
-                        <th scope="col">İlan Tipi</th>
-                        <th scope="col">Fiyat</th>
-                        <th scope="col">Satış durumu</th>
-                        <th scope="col">Satılık/Kiralık</th>
-                        <th scope="col">Detaylar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var ilan in Model)
-                    {
+    <form asp-controller="ilanlar" asp-action="ilanSil" method="post">
+        <div class="bg-secondary text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">İlanlar</h6>
+                <a href="/ilanlar/ilanekle" class="btn btn-success" style="color:#ffffff"><i class="fa-solid fa-plus"></i> Yeni ilan</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <thead>
                         <tr>
-                            <td><input class="form-check-input" type="checkbox"></td>
-                            <td>@ilan.Satici.AdSoyad</td>
-                            <td>@ilan.IlanTalepTipiId</td>
-                            <td>@ilan.IlanFiyati</td>
-                            <td>@((ilan.SatisDurumu) ? "Satildi" : "Alıcı bekliyor")</td>
-                            <td>@ilan.SatilikMiKiralikMi</td>
-                            <td><a class="btn btn-sm btn-primary" href="/detay/@ilan.Id">Detail</a></td>
+                            <th scope="col"></th>
+                            <th scope="col">Başlık</th>
+                            <th scope="col">Satıcı İsim soyisim</th>
+                            <th scope="col">İlan Tipi</th>
+                            <th scope="col">Fiyat</th>
+                            <th scope="col">Komisyon</th>
+                            <th scope="col">Satılık/Kiralık</th>
+                            <th scope="col">Kazanç</th>
+                            <th scope="col">Lokasyon</th>
+                            <th scope="col">Detaylar</th>
+                            <th scope="col">Satış durumu</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var ilan in Model)
+                        {
+                            <tr @(ilan.SatisDurumu ? "style=background-color:#95d5b2;" : "")>
+                                <td><input name="ilanlar" class="form-check-input" type="checkbox" value=@ilan.Id></td>
+                                <td>@ilan.IlanBaslik</td>
+                                <td>@ilan.Satici.AdSoyad</td>
+                                <td>@ilan.IlanTalepTipi.TipAdi</td>
+                                <td>@ilan.PortfoyFiyati</td>
+                                <td>@ilan.Komisyon</td>
+                                <td>@ilan.SatilikMiKiralikMi</td>
+                                <td>@ilan.Kazanc</td>
+                                <td>@ilan.Mahalle, @ilan.Semt, @ilan.Sehir</td>
+                                <td><a class="btn btn-sm btn-primary" href="ilanlar/detay/@ilan.Id">Detay</a></td>
+                                <td class="d-flex justify-content-between">
+                                    @if (!ilan.SatisDurumu)
+                                    {
+                                        <p>Alıcı bekliyor</p><button type="button" class='btn btn-danger' onclick="ilanSatModal('@ilan.Id')">Sat</button>
+                                    }
+                                    else
+                                    {
+                                        <p>Satıldı</p>
+                                    }
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+                <button type="button" class="btn btn-lg btn-danger" onclick="ilanSilModal()">
+                    İlan Sil
+                </button>
+            </div>
         </div>
-    </div>
+        <div class="modal" tabindex="-1" role="dialog" id="ilanSilModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p style="color:#ffffff">Seçtiğiniz ilanlar silinsin mi?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" onclick="ilanSil()">Sil</button>
+                        <button type="button" class="btn btn-outline-secondary" onclick="closeModal()">Vazgeç</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" tabindex="-1" role="dialog" id="ilanSatModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p style="color:#ffffff">İlan satıldı olarak işaretlenecek</p>
+                        <div>
+                            <p>Lütfen bu satıştan kazancınızı giriniz.</p>
+                            <div class="form-group">
+                                <input class="form-control" type="number" id="kazanc" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" id="kazanc-footer">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    @if (TempData["error"] != null)
+    {
+        <div id="errorDiv" class="bg-danger">
+            @TempData["error"]
+        </div>
+
+        <script>
+            setTimeout(() => {
+                $("#errorDiv").fadeOut();
+            }, 5000);
+        </script>
+    }
 </div>
 <!-- Recent Sales End -->
 
 <script>
     $("#navIlan").addClass("active");
+
+    function ilanSilModal() {
+        $("#ilanSilModal").css("display", "flex");
+        $("#ilanSilModal").css("align-items", "center");
+        $("#ilanSilModal").css("justify-content", "center");
+
+    }
+
+    function ilanSil(){
+        var ilanIds=[];
+        var ilanlar = $("input[name='ilanlar']");
+        ilanlar.each((index,value)=>{
+            if (value.checked) {
+                ilanIds.push(value.value);
+            }
+        });
+
+        $.post("https://localhost:7191/ilanlar/ilansil", { idsJson:JSON.stringify(ilanIds)}, (data,status) => {
+            if(status="success"){
+                location.reload()
+            }
+        });
+    }
+
+    function ilanSatModal(id) {
+        console.log(id);
+        $("#ilanSatModal").css("display", "flex");
+        $("#ilanSatModal").css("align-items", "center");
+        $("#ilanSatModal").css("justify-content", "center");
+
+        $("#kazanc-footer").html(`<button type="button" class="btn btn-danger" onclick="ilanSat('${id}')">Satıldı</button>
+            <button type="button" class="btn btn-outline-secondary" onclick="closeModal()">Vazgeç</button>`)
+    }
+
+    function ilanSat(id) {
+        console.log(id);
+        $.post("https://localhost:7191/ilanlar/ilansat/"+id+"?kazanc="+$("#kazanc").val(), (data,status) => {
+            if(status="success"){
+                location.reload()
+            }
+        });
+    }
 </script>

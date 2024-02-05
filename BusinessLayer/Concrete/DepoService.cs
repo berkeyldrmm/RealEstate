@@ -24,10 +24,6 @@ namespace BusinessLayer.Concrete
             return _depoRepository.Delete(item);
         }
 
-        public void DeleteRange(IEnumerable<Depo> items)
-        {
-            _depoRepository.DeleteRange(items);
-        }
 
         public Task<IEnumerable<Depo>> GetAll()
         {

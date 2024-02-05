@@ -24,11 +24,6 @@ namespace BusinessLayer.Concrete
             return _tarlaRepository.Delete(item);
         }
 
-        public void DeleteRange(IEnumerable<Tarla> items)
-        {
-            _tarlaRepository.DeleteRange(items);
-        }
-
         public Task<IEnumerable<Tarla>> GetAll()
         {
             return _tarlaRepository.ReadAll();

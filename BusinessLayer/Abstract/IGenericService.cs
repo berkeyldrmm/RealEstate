@@ -14,6 +14,5 @@ namespace BusinessLayer.Abstract
         Task<bool> Insert(T item);
         Task<bool> Update(T item);
         bool DeleteAsync(T item);
-        void DeleteRange(IEnumerable<T> items);
     }
 }

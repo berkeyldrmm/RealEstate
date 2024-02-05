@@ -1,4 +1,4 @@
-using BusinessLayer.Validation.Concrete;
+using BusinessLayer.Validation;
 using DataAccessLayer.Context;
 using EntityLayer.Entities;
 using FluentValidation;
@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using RealEstate.Extensions;
+using RealEstate.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +52,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseStatusCodePagesWithReExecute("/Error/ErrorPage", "?code={0}");
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -58,6 +61,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllerRoute(
     name: "default",

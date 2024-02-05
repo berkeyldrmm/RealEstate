@@ -12,10 +12,7 @@ namespace EntityLayer.Entities
     {
         public string Id { get; set; }
         public string MetrekareNet { get; set; }
+        public decimal? MetrekareFiyat { get; set; }
         public Ilan? Ilan { get; set; }
-        public string? TalepId { get; set; }
-        public Talep? Talep { get; set; }
-        public decimal Fiyat { get; set; }
-        public string SatilikKiralik { get; set; }
     }
 }

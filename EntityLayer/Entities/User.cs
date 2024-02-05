@@ -11,14 +11,12 @@ namespace EntityLayer.Entities
     {
         public User()
         {
-            Alicilar = new List<Alici>();
-            Saticilar = new List<Satici>();
+            Danisanlar = new List<Danisan>();
             Ilanlar = new List<Ilan>();
             Talepler = new List<Talep>();
         }
         public string NameSurname { get; set; }
-        public IEnumerable<Alici> Alicilar { get; set; }
-        public IEnumerable<Satici> Saticilar { get; set; }
+        public IEnumerable<Danisan> Danisanlar { get; set; }
         public IEnumerable<Ilan> Ilanlar { get; set; }
         public IEnumerable<Talep> Talepler { get; set; }
     }

@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -32,6 +33,7 @@
     <!-- Template Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -58,8 +60,7 @@
                     <a href="/" class="nav-item nav-link" id="navHome"><i class="fa fa-tachometer-alt me-2"></i>Genel</a>
                     <a href="/ilanlar" class="nav-item nav-link" id="navIlan"><i class="fa fa-laptop me-2"></i>Satış İlanları</a>
                     <a href="/talepler" class="nav-item nav-link" id="navTalep"><i class="fa fa-th me-2"></i>Alış Talepleri</a>
-                    <a href="/saticilar" class="nav-item nav-link" id="navSatici"><i class="fa fa-keyboard me-2"></i>Satıcılar</a>
-                    <a href="/alicilar" class="nav-item nav-link" id="navAlici"><i class="fa fa-table me-2"></i>Alıcılar</a>
+                    <a href="/danisanlar" class="nav-item nav-link" id="navSatici"><i class="fa fa-keyboard me-2"></i>Danışanlar</a>
                     <a href="/muhasebe" class="nav-item nav-link" id="navMuhasebe"><i class="fa fa-chart-bar me-2"></i>Muhasebe</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
@@ -147,6 +148,11 @@
                             <hr class="dropdown-divider">
                             <a href="#" class="dropdown-item text-center">See all notifications</a>
                         </div>
+                    </div>
+                    <div class="nav-item" style="margin-left:15px;">
+                        <a href="/login/changepassword" style="color: #4CB9E7;text-decoration: none; border:none;">
+                            Şifre değiştir
+                        </a>
                     </div>
                     <div class="nav-item" style="margin-left:15px;">
                         <button style="color: #4CB9E7;text-decoration: none; border:none;" onclick="signOutModal()">

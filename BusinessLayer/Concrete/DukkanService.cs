@@ -24,10 +24,6 @@ namespace BusinessLayer.Concrete
             return _dukkanRepository.Delete(item);
         }
 
-        public void DeleteRange(IEnumerable<Dukkan> items)
-        {
-            _dukkanRepository.DeleteRange(items);
-        }
 
         public Task<IEnumerable<Dukkan>> GetAll()
         {

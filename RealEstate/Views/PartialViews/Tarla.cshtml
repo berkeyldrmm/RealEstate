@@ -1,0 +1,30 @@
+﻿@model Tarla
+
+<div class="row">
+    <div class="col-6">Metrekare Net </div>
+    <div class="col-6">@Model.MetrekareNet</div>
+</div>
+<div class="row">
+    <div class="col-6">Ada No. </div>
+    <div class="col-6">@Model.AdaNo</div>
+</div>
+<div class="row">
+    <div class="col-6">Parsel No. </div>
+    <div class="col-6">@Model.ParselNo</div>
+</div>
+<div class="row">
+    <div class="col-6">Pafta No. </div>
+    <div class="col-6">@Model.PaftaNo</div>
+</div>
+<div class="row">
+    <div class="col-6">Metrekare Fiyat </div>
+    <div class="col-6">@Model.MetrekareFiyat</div>
+</div>
+<div class="row">
+    <div class="col-6">Tapu Durumu </div>
+    <div class="col-6">@(Model.TapuDurumu ? "Var" : "Yok")</div>
+</div>
+<div class="row">
+    <div class="col-6">İmar Durumu </div>
+    <div class="col-6">@(Model.ImarDurumu ? "Var" : "Yok")</div>
+</div>

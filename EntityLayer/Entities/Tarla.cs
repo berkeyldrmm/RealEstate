@@ -6,7 +6,6 @@ namespace EntityLayer.Entities;
 
 public partial class Tarla : Portfoy
 {
-    public decimal? MetrekareFiyat { get; set; }
     public bool ImarDurumu { get; set; }
     public string? AdaNo { get; set; }
     public string? ParselNo { get; set; }

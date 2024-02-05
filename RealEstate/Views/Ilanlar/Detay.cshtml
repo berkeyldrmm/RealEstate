@@ -1,0 +1,116 @@
+﻿@model Ilan
+
+<style>
+    .container{
+        font-size:1.25em;
+        color:#000000;
+    }
+
+    .col-6{
+        display:flex;
+        align-items:center;
+        justify-content:end;
+    }
+
+    .row > .col-6:first-child{
+        justify-content: end;
+    }
+
+    .row > .col-6:last-child {
+        border-left:1px solid gray;
+        justify-content:start;
+    }
+
+    .row {
+        padding:3px;
+        border: 1px solid gray;
+    }
+
+    .pt-4{
+        padding:0;
+        margin:0;
+        box-sizing:border-box;
+    }
+
+    footer .row{
+        padding:0;
+        border:none;
+    }
+</style>
+
+<h1 class="text-center mt-4">@Model.IlanBaslik</h1>
+<div class="d-flex pt-4">
+    <div class="container d-grid w-50">
+        <div class="row">
+            <div class="col-6"><span>Satıcı isim soyisim </span></div>
+            <div class="col-6"><span>@Model.Satici.AdSoyad</span></div>
+        </div>
+        <div class="row">
+            <div class="col-6"><span>Satıcı mail adresi</span> </div>
+            <div class="col-6"><span>@Model.Satici.MailAdresi</span></div>
+        </div>
+        <div class="row">
+            <div class="col-6"><span>İlan tipi</span> </div>
+            <div class="col-6"><span>@Model.IlanTalepTipi.TipAdi</span></div>
+        </div>
+        
+        <div class="row">
+            <div class="col-6"><span>Satılık/Kiralık</span> </div>
+            <div class="col-6"><span>@Model.SatilikMiKiralikMi</span></div>
+        </div>
+        <div class="row">
+            <div class="col-6"><span>Adres </span></div>
+            <div class="col-6"><span>@Model.Mahalle, @Model.Semt, @Model.Sehir</span></div>
+        </div>
+        <div class="row">
+            <div class="col-6"><span>Fiyat</span> </div>
+            <div class="col-6"><span>@Model.PortfoyFiyati</span></div>
+        </div>
+        <div class="row">
+            <div class="col-6"><span>Komisyon</span> </div>
+            <div class="col-6"><span>@Model.Komisyon</span></div>
+        </div>
+        <div class="row">
+            <div class="col-6"><span>Satış durumu</span> </div>
+            <div class="col-6"><span>@(Model.SatisDurumu ? "Satıldı" : "Alıcı bekliyor")</span></div>
+        </div>
+        @if (Model.SatisDurumu)
+        {
+            <div class="row">
+                <div class="col-6"><span>Kazanç </span></div>
+                <div class="col-6"><span>@Model.Kazanc</span></div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-6"><span>İlan kayıt tarihi</span> </div>
+            <div class="col-6"><span>@Model.KayitTarihi</span></div>
+        </div>
+        <div class="row">
+            <div class="col-2"><span>Detaylar:</span> </div>
+            <div class="col-10"><span>@Model.Detaylar</span></div>
+        </div>
+    </div>
+
+    <div class="container d-grid w-50">
+        @if (Model.IlanTalepTipi.Id == 1)
+        {
+            <partial name="../PartialViews/Dukkan" model=@Model.Dukkan></partial>
+        }
+        @if (Model.IlanTalepTipi.Id == 2)
+        {
+            <partial name="../PartialViews/Arsa" model=@Model.Arsa></partial>
+        }
+        @if (Model.IlanTalepTipi.Id == 3)
+        {
+            <partial name="../PartialViews/Depo" model=@Model.Depo></partial>
+        }
+        @if (Model.IlanTalepTipi.Id == 4)
+        {
+            <partial name="../PartialViews/Tarla" model=@Model.Tarla></partial>
+        }
+        @if (Model.IlanTalepTipi.Id == 5)
+        {
+            <partial name="../PartialViews/Daire" model=@Model.Daire></partial>
+        }
+    </div>
+</div>

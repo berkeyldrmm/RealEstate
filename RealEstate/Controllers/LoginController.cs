@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Validation.Concrete;
+﻿
 using DataAccessLayer.Context;
 using DTOLayer;
 using EntityLayer.Entities;
@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using RealEstate.Models;
 
 namespace RealEstate.Controllers
 {
@@ -26,7 +25,6 @@ namespace RealEstate.Controllers
 
         public IActionResult Index()
         {
-
             return View();
         }
 
@@ -66,6 +64,31 @@ namespace RealEstate.Controllers
         {
             User user = await _userManager.FindByNameAsync(User.Identity.Name);
             return user.NameSurname;
+        }
+
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModelDTO changePasswordModelDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                User? user = await _userManager.FindByNameAsync(User.Identity.Name);
+                var result = await _userManager.ChangePasswordAsync(user, changePasswordModelDTO.OldPassword,changePasswordModelDTO.NewPassword);
+                if (result.Succeeded)
+                {
+                    ViewBag.error = "Şifreniz başarıyla değiştirildi";
+                    await _signInManager.SignOutAsync();
+                    return RedirectToAction("Index","Home");
+                }
+
+                ViewBag.error = result.Errors;
+            }
+
+            return View();
         }
     }
 }

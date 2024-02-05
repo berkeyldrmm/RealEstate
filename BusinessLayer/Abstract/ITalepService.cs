@@ -10,5 +10,9 @@ namespace BusinessLayer.Abstract
 {
     public interface ITalepService : IGenericService<Talep>
     {
+        public Task<IEnumerable<Talep>> GetAllWithAlici(string userId);
+        public Task<Talep> GetWithAlici(string userId, string id);
+        public Task<IlanTalepTipi> GetIlanTalepTipi(int id);
+        void DeleteRange(IEnumerable<string> Ids);
     }
 }

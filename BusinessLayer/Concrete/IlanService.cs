@@ -24,8 +24,9 @@ namespace BusinessLayer.Concrete
             return _ilanRepository.Delete(item);
         }
 
-        public void DeleteRange(IEnumerable<Ilan> items)
+        public void DeleteRange(IEnumerable<string> Ids)
         {
+            var items = _ilanRepository.GetRange(Ids);
             _ilanRepository.DeleteRange(items);
         }
 
@@ -49,13 +50,23 @@ namespace BusinessLayer.Concrete
             return _ilanRepository.Update(item);
         }
 
-        public async Task<IEnumerable<Ilan>> GetAllWithSatici()
+        public async Task<IEnumerable<Ilan>> GetAllWithSatici(string userId)
         {
-            return await _ilanRepository.GetAllWithSatici();
+            return await _ilanRepository.GetAllWithSatici(userId);
         }
-        public async Task<Ilan> GetWithSatici(string id)
+        public async Task<Ilan> GetWithSatici(string userId, string id)
         {
-            return await _ilanRepository.GetWithSatici(id);
+            return await _ilanRepository.GetWithSatici(userId, id);
+        }
+
+        public Task<IlanTalepTipi> GetIlanTalepTipi(int id)
+        {
+            return _ilanRepository.GetIlanTalepTipi(id);
+        }
+
+        public Task<bool> IlanSat(string id, string kazanc)
+        {
+            return _ilanRepository.IlanSat(id, kazanc);
         }
     }
 }

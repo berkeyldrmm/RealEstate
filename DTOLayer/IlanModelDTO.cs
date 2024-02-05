@@ -10,6 +10,7 @@ namespace DTOLayer
     {
         public string RadioForSatici { get; set; }
         public string? SaticiId { get; set; } = string.Empty;
+        public string? IlanBaslik { get; set; } = string.Empty;
         public string? SaticiIsimSoyisim { get; set; } = string.Empty;
         public string? SaticiMail { get; set; } = string.Empty;
         public string? SaticiTelNo { get; set; } = string.Empty;
@@ -38,6 +39,9 @@ namespace DTOLayer
         public string? Aidat { get; set; } = string.Empty;
         public string? TapuDurumu { get; set; } = string.Empty;
         public string SatilikMiKiralikMi { get; set; } = string.Empty;
+        public string Sehir { get; set; }
+        public string Semt { get; set; }
+        public string Mahalle { get; set; }
         public decimal Fiyat { get; set; }
         public string radioForKomisyon { get; set; } = string.Empty;
         public string? Komisyon { get; set; } = string.Empty;

@@ -24,10 +24,6 @@ namespace BusinessLayer.Concrete
             return _arsaRepository.Delete(item);
         }
 
-        public void DeleteRange(IEnumerable<Arsa> items)
-        {
-            _arsaRepository.DeleteRange(items);
-        }
 
         public Task<IEnumerable<Arsa>> GetAll()
         {

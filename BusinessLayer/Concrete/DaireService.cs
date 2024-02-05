@@ -24,10 +24,6 @@ namespace BusinessLayer.Concrete
             return _daireRepository.Delete(item);
         }
 
-        public void DeleteRange(IEnumerable<Daire> items)
-        {
-            _daireRepository.DeleteRange(items);
-        }
 
         public Task<IEnumerable<Daire>> GetAll()
         {
