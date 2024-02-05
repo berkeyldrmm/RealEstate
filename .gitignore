@@ -365,4 +365,4 @@ FodyWeavers.xsd
 # .gitignore
 
 # wwwroot içindeki kütüphaneleri ignore et
-/wwwroot/lib/
+RealEstate/wwwroot/lib/
