@@ -34,7 +34,16 @@ public partial class RealEstateDBContext : IdentityDbContext<User, Role, string>
     //}
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=BERKE;Database=RealEstateDB;Trusted_Connection=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=BERKE;Database=RealEstateDB;Trusted_Connection=True;TrustServerCertificate=True;",
+                sqlServerOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 10,
+                            maxRetryDelay: TimeSpan.FromSeconds(5),
+                            errorNumbersToAdd: null
+                       );
+                }
+            );
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -50,6 +59,7 @@ public partial class RealEstateDBContext : IdentityDbContext<User, Role, string>
             entity.Property(e => e.MetrekareFiyat).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.PaftaNo).HasColumnName("PaftaNo.");
             entity.Property(e => e.ParselNo).HasColumnName("ParselNo.");
+
 
         });
 
@@ -95,14 +105,16 @@ public partial class RealEstateDBContext : IdentityDbContext<User, Role, string>
         modelBuilder.Entity<Ilan>(entity =>
         {
             entity.ToTable("Ilanlar");
+            entity.HasKey(t => t.Id);
 
             entity.Property(e => e.Id).HasMaxLength(50);
+
+            entity.Navigation("Arsa");
 
             entity.HasOne(i => i.Satici)
             .WithMany(s => s.Ilanlar)
             .HasForeignKey(i => i.SaticiId);
 
-            entity.HasKey(t => t.Id);
             entity.HasOne(i=>i.IlanTalepTipi)
             .WithMany(itt=>itt.Ilanlar)
             .HasForeignKey(i=>i.IlanTalepTipiId);
@@ -126,6 +138,7 @@ public partial class RealEstateDBContext : IdentityDbContext<User, Role, string>
             entity.HasOne(i => i.Tarla)
             .WithOne(a => a.Ilan)
             .HasForeignKey<Tarla>(t => t.Id);
+
 
         });
 
