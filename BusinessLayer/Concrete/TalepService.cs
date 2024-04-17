@@ -41,6 +41,11 @@ namespace BusinessLayer.Concrete
             return await _talepRepository.GetAllWithAlici(userId);
         }
 
+        public object GetCountsOfTalepler()
+        {
+            return _talepRepository.GetCountsOfTalepler();
+        }
+
         public Task<IlanTalepTipi> GetIlanTalepTipi(int id)
         {
             return _talepRepository.GetIlanTalepTipi(id);
@@ -49,6 +54,11 @@ namespace BusinessLayer.Concrete
         public Task<Talep> GetOne(string id)
         {
             return _talepRepository.Read(id);
+        }
+
+        public object GetSatilikKiralik()
+        {
+            return _talepRepository.GetSatilikKiralik();
         }
 
         public async Task<Talep> GetWithAlici(string userId, string id)

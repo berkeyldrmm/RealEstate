@@ -2,8 +2,9 @@
 
 <style>
     .container{
-        font-size:1.25em;
-        color:#000000;
+        font-size:1.10em;
+        color: #000000;
+        width: 35%;
     }
 
     .col-6{
@@ -22,8 +23,8 @@
     }
 
     .row {
-        padding:3px;
-        border: 1px solid gray;
+        padding: 3px;
+        border-bottom: 1px solid gray;
     }
 
     .pt-4{
@@ -32,6 +33,8 @@
         box-sizing:border-box;
     }
 
+    
+
     footer .row{
         padding:0;
         border:none;
@@ -39,11 +42,15 @@
 </style>
 
 <h1 class="text-center mt-4">@Model.IlanBaslik</h1>
-<div class="d-flex pt-4">
-    <div class="container d-grid w-50">
+<div class="d-flex justify-content-between pt-4">
+    <div class="container d-grid">
         <div class="row">
             <div class="col-6"><span>Satıcı isim soyisim </span></div>
             <div class="col-6"><span>@Model.Satici.AdSoyad</span></div>
+        </div>
+        <div class="row">
+            <div class="col-6"><span>Satıcı telefon numarası</span> </div>
+            <div class="col-6"><span>@Model.Satici.TelefonNo</span></div>
         </div>
         <div class="row">
             <div class="col-6"><span>Satıcı mail adresi</span> </div>
@@ -81,17 +88,13 @@
                 <div class="col-6"><span>@Model.Kazanc</span></div>
             </div>
         }
-        <div class="row">
+        <div class="row" style="border:none">
             <div class="col-6"><span>İlan kayıt tarihi</span> </div>
             <div class="col-6"><span>@Model.KayitTarihi</span></div>
         </div>
-        <div class="row">
-            <div class="col-2"><span>Detaylar:</span> </div>
-            <div class="col-10"><span>@Model.Detaylar</span></div>
-        </div>
     </div>
 
-    <div class="container d-grid w-50">
+    <div class="container d-grid">
         @if (Model.IlanTalepTipi.Id == 1)
         {
             <partial name="../PartialViews/Dukkan" model=@Model.Dukkan></partial>
@@ -113,4 +116,7 @@
             <partial name="../PartialViews/Daire" model=@Model.Daire></partial>
         }
     </div>
+</div>
+<div class="container w-100 mt-5">
+    Detaylar : @Model.Detaylar
 </div>

@@ -37,5 +37,25 @@ namespace DataAccessLayer.Concrete
             return await EntityOfUser(userId).Include(t => t.Alici).Include(t => t.IlanTalepTipi).FirstOrDefaultAsync(t => t.Id == id);
         }
 
+        public object GetCountsOfTalepler()
+        {
+            return new
+            {
+                CountOfArsa = Entity.Where(i => i.IlanTalepTipiId == 2).Count(),
+                CountOfTarla = Entity.Where(i => i.IlanTalepTipiId == 4).Count(),
+                CountOfDukkan = Entity.Where(i => i.IlanTalepTipiId == 1).Count(),
+                CountOfDepo = Entity.Where(i => i.IlanTalepTipiId == 3).Count(),
+                CountOfDaire = Entity.Where(i => i.IlanTalepTipiId == 5).Count()
+            };
+        }
+
+        public object GetSatilikKiralik()
+        {
+            return new
+            {
+                Satilik = Entity.Where(i => i.SatilikMiKiralikMi == "Satılık").Count(),
+                Kiralik = Entity.Where(i => i.SatilikMiKiralikMi == "Kiralık").Count()
+            };
+        }
     }
 }

@@ -163,7 +163,9 @@ namespace RealEstate.Controllers
                             MetrekareBrut = Convert.ToInt32(ilanModel.MetrekareBrut),
                             ParselNo = ilanModel.ParselNo,
                             OdaSayisi = ilanModel.OdaSayisi,
-                            SiteMi = Convert.ToBoolean(Convert.ToInt32(ilanModel.SiteMi))
+                            SiteMi = Convert.ToBoolean(Convert.ToInt32(ilanModel.SiteMi)),
+                            BalkonSayisi = Convert.ToInt32(ilanModel.BalkonSayisi),
+                            BanyoSayisi = Convert.ToInt32(ilanModel.BanyoSayisi)
                         };
                         break;
                     default:
@@ -225,6 +227,32 @@ namespace RealEstate.Controllers
         {
             var ilan = await _ilanService.GetWithSatici(UserId,id);
             return View(ilan);
+        }
+
+        public string getCountOfIlanlar()
+        {
+            var counts = _ilanService.GetCountsOfIlanlar();
+            var countsOfIlanlar = JsonConvert.SerializeObject(counts);
+            return countsOfIlanlar;
+        }
+
+        public string getSatilikKiralik()
+        {
+            var counts = _ilanService.GetSatilikKiralik();
+            var countsOfSatilik = JsonConvert.SerializeObject(counts);
+            return countsOfSatilik;
+        }
+
+        public async Task<string> getByFilters(string satilikKiralik, int ilanTipi, string satisDurumu, string minFiyat, string maxFiyat, string sirala, string search)
+        {
+            var ilanlar = await _ilanService.GetByFilters(satilikKiralik, ilanTipi, satisDurumu, minFiyat, maxFiyat, sirala, search);
+            var result = JsonConvert.SerializeObject(ilanlar, Formatting.Indented,
+                new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+            return result;
+            //return Json(ilanlar);
         }
     }
 }

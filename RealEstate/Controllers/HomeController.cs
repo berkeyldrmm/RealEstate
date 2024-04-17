@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using DTOLayer;
 
 namespace RealEstate.Controllers
 {
@@ -16,6 +16,6 @@ namespace RealEstate.Controllers
         {
             return View();
         }
-
+        
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,6 +55,60 @@ namespace DataAccessLayer.Concrete
             ilan.Kazanc=Convert.ToDecimal(kazanc);
             bool result = await Update(ilan);
             return result;
+        }
+
+        public object GetCountsOfIlanlar()
+        {
+            return new
+            {
+                CountOfArsa = Entity.Where(i => i.IlanTalepTipiId == 2).Count(),
+                CountOfTarla = Entity.Where(i => i.IlanTalepTipiId == 4).Count(),
+                CountOfDukkan = Entity.Where(i => i.IlanTalepTipiId == 1).Count(),
+                CountOfDepo = Entity.Where(i => i.IlanTalepTipiId == 3).Count(),
+                CountOfDaire = Entity.Where(i => i.IlanTalepTipiId == 5).Count()
+            };
+            
+        }
+
+        public object GetSatilikKiralik()
+        {
+            return new
+            {
+                Satilik = Entity.Where(i => i.SatilikMiKiralikMi == "Satılık").Count(),
+                Kiralik = Entity.Where(i => i.SatilikMiKiralikMi == "Kiralık").Count()
+            };
+        }
+
+        public async Task<IEnumerable<Ilan>> GetByFilters(List<Expression<Func<Ilan, bool>>> expressions, string sirala)
+        {
+            IQueryable<Ilan> query = Entity.Include(i => i.Satici).Include(i => i.IlanTalepTipi);
+
+            foreach (var expression in expressions)
+            {
+                query = query.Where(expression);
+            }
+
+            if (sirala != null)
+            {
+                if (sirala.ToLower() == "ilkyeni")
+                {
+                    query = query.OrderByDescending(i => i.KayitTarihi);
+                }
+                if (sirala.ToLower() == "ilkeski")
+                {
+                    query = query.OrderBy(i => i.KayitTarihi);
+                }
+                if (sirala.ToLower() == "artanfiyat")
+                {
+                    query = query.OrderBy(i => i.PortfoyFiyati);
+                }
+                if (sirala.ToLower() == "azalanfiyat")
+                {
+                    query = query.OrderByDescending(i => i.PortfoyFiyati);
+                }
+            }
+
+            return await query.ToListAsync();
         }
     }
 }

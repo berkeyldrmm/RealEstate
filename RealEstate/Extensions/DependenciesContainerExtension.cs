@@ -10,7 +10,6 @@ namespace RealEstate.Extensions
     {
         public static void DependenciesContainer(this IServiceCollection services)
         {
-            services.AddScoped<IDanisanDal, DanisanRepository>();
             services.AddScoped<IArsaService, ArsaService>();
             services.AddScoped<IDaireService, DaireService>();
             services.AddScoped<IDepoService, DepoService>();

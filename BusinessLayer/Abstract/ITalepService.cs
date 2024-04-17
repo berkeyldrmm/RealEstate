@@ -14,5 +14,7 @@ namespace BusinessLayer.Abstract
         public Task<Talep> GetWithAlici(string userId, string id);
         public Task<IlanTalepTipi> GetIlanTalepTipi(int id);
         void DeleteRange(IEnumerable<string> Ids);
+        public object GetCountsOfTalepler();
+        public object GetSatilikKiralik();
     }
 }

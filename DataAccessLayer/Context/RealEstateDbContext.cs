@@ -28,22 +28,13 @@ public partial class RealEstateDBContext : IdentityDbContext<User, Role, string>
 
     public virtual DbSet<Tarla> Tarlalar { get; set; }
 
-    //public RealEstateDBContext(DbContextOptions options) : base(options)
-    //{
+    public RealEstateDBContext(DbContextOptions options) : base(options)
+    {
 
-    //}
+    }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=BERKE;Database=RealEstateDB;Trusted_Connection=True;TrustServerCertificate=True;",
-                sqlServerOptionsAction: sqlOptions =>
-                {
-                    sqlOptions.EnableRetryOnFailure(
-                            maxRetryCount: 10,
-                            maxRetryDelay: TimeSpan.FromSeconds(5),
-                            errorNumbersToAdd: null
-                       );
-                }
-            );
+        => optionsBuilder.UseSqlServer("Server=BERKE;Database=RealEstateDB;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -60,7 +51,6 @@ public partial class RealEstateDBContext : IdentityDbContext<User, Role, string>
             entity.Property(e => e.PaftaNo).HasColumnName("PaftaNo.");
             entity.Property(e => e.ParselNo).HasColumnName("ParselNo.");
 
-
         });
 
         modelBuilder.Entity<Daire>(entity =>
@@ -70,6 +60,10 @@ public partial class RealEstateDBContext : IdentityDbContext<User, Role, string>
             entity.Property(e => e.Id).HasMaxLength(50);
             entity.Property(e => e.Isıtma).HasMaxLength(50);
             entity.Property(e => e.KullanimDurumu).HasMaxLength(50);
+
+            entity.HasOne(i => i.Ilan)
+            .WithOne(a => a.Daire)
+            .HasForeignKey<Daire>(a => a.Id);
 
         });
 
@@ -81,6 +75,9 @@ public partial class RealEstateDBContext : IdentityDbContext<User, Role, string>
             entity.Property(e => e.AdaNo).HasColumnName("AdaNo.");
             entity.Property(e => e.ParselNo).HasColumnName("ParselNo.");
 
+            entity.HasOne(i => i.Ilan)
+            .WithOne(a => a.Depo)
+            .HasForeignKey<Depo>(a => a.Id);
         });
 
         modelBuilder.Entity<Dukkan>(entity =>
@@ -90,6 +87,10 @@ public partial class RealEstateDBContext : IdentityDbContext<User, Role, string>
             entity.Property(e => e.Id).HasMaxLength(50);
             entity.Property(e => e.Isıtma).HasMaxLength(50);
             entity.Property(e => e.KullanimDurumu).HasMaxLength(50);
+
+            entity.HasOne(i => i.Ilan)
+            .WithOne(a => a.Dukkan)
+            .HasForeignKey<Dukkan>(a => a.Id);
 
         });
 
@@ -178,6 +179,10 @@ public partial class RealEstateDBContext : IdentityDbContext<User, Role, string>
             entity.Property(e => e.MetrekareFiyat).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.PaftaNo).HasColumnName("PaftaNo.");
             entity.Property(e => e.ParselNo).HasColumnName("ParselNo.");
+
+            entity.HasOne(i => i.Ilan)
+            .WithOne(a => a.Tarla)
+            .HasForeignKey<Tarla>(t => t.Id);
 
         });
 

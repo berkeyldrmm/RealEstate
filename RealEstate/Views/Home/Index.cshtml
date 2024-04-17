@@ -1,15 +1,31 @@
 ﻿<div class="container-fluid pt-4 px-4">
     <div class="row g-4">
-        <div class="col-sm-12 col-xl-6">
+        <div class="col-xl-3">
             <div class="bg-secondary rounded h-100 p-4">
-                <h6 class="mb-4">Doughnut Chart</h6>
-                <canvas id="doughnut-chart"></canvas>
+                <h6 class="mb-4">İlan Tipleri Dağılım</h6>
+               
+                <canvas class="canvas" id="doughnut-chart"></canvas>
             </div>
         </div>
-        <div class="col-sm-12 col-xl-6">
+        <div class="col-xl-3">
             <div class="bg-secondary rounded h-100 p-4">
-                <h6 class="mb-4">Doughnut Chart</h6>
-                <canvas id="doughnut-chart2"></canvas>
+                <h6 class="mb-4">Satılık-Kiralık İlan Dağılım</h6>
+                
+                <canvas class="canvas" id="doughnut-chart2"></canvas>
+            </div>
+        </div>
+        <div class="col-xl-3">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Talep Tipleri Dağılım</h6>
+
+                <canvas class="canvas" id="doughnut-chart3"></canvas>
+            </div>
+        </div>
+        <div class="col-xl-3">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Satılık-Kiralık Talep Dağılım</h6>
+
+                <canvas class="canvas" id="doughnut-chart4"></canvas>
             </div>
         </div>
     </div>
@@ -28,7 +44,7 @@
             </div>
         </div>
         <div class="col-sm-12 col-md-6 col-xl-6">
-            <div class="h-100 bg-secondary rounded p-4" id="taskList">
+            <div class="h-100 bg-secondary rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h6 class="mb-0">Yapılacaklar listesi</h6>
                 </div>
@@ -36,41 +52,7 @@
                     <input class="form-control border-0" type="text" id="taskInput" placeholder="Yeni görev giriniz">
                     <button type="button" id="addTask" class="btn btn-primary ms-2">Ekle</button>
                 </div>
-                <div class="d-flex align-items-center border-bottom py-2">
-                    <input class="form-check-input m-0" type="checkbox">
-                    <div class="w-100 ms-3">
-                        <div class="d-flex w-100 align-items-center justify-content-between">
-                            <span>Short task goes here...</span>
-                            <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center border-bottom py-2">
-                    <input class="form-check-input m-0" type="checkbox">
-                    <div class="w-100 ms-3">
-                        <div class="d-flex w-100 align-items-center justify-content-between">
-                            <span>Short task goes here...</span>
-                            <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center border-bottom py-2">
-                    <input class="form-check-input m-0" type="checkbox">
-                    <div class="w-100 ms-3">
-                        <div class="d-flex w-100 align-items-center justify-content-between">
-                            <span>Short task goes here...</span>
-                            <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center border-bottom py-2">
-                    <input class="form-check-input m-0" type="checkbox">
-                    <div class="w-100 ms-3">
-                        <div class="d-flex w-100 align-items-center justify-content-between">
-                            <span>Short task goes here...</span>
-                            <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
+                <div id="taskList" style="overflow-y:scroll;height:200px;">
                 </div>
             </div>
         </div>
@@ -78,37 +60,71 @@
 </div>
 <!-- Widgets End -->
 <script>
+    const baseUrl = "https://localhost:7191";
     $("#navHome").addClass("active");
+    getToDoList();
+    
+    $(document).ready(()=>{
+        $("#addTask").click(() => {
+            $.post(baseUrl + "/task/addTask", { taskText: $("#taskInput").val() },
+                (data, status) => {
+                    if (status == "success") {
+                        getToDoList();
+                    }
+                }
+            );
+        });
 
-    $("#addTask").click(()=>{
-        var html=$("#taskList").html();
-        var taskInput = $("#taskInput").val();
-        $("#taskList").html(html+`
-            <div class="d-flex align-items-center border-bottom py-2">
-                    <input class="form-check-input m-0" type="checkbox">
-                    <div class="w-100 ms-3">
-                        <div class="d-flex w-100 align-items-center justify-content-between">
-                            <span>${taskInput}</span>
-                            <button class="btn btn-sm"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div>
-                </div>
-        `)
+        $(document).on("change", "#taskList input:checkbox", (e) => {
+            var taskId = e.target.parentNode.getAttribute("value");
+            checked = !e.target.checked;
+            $.get(baseUrl + "/task/signAsDoneTask?checkedInput=" + checked + "&taskId=" + taskId, (data, status) => {
+                if (status == "success") {
+                    getToDoList();
+                }
+            });
+        });
+
+        $(document).on("click", "#taskList .deleteTask", (e) => {
+            var taskId = e.target.parentNode.parentNode.getAttribute("value");
+            console.log(taskId);
+            $.ajax({
+                type: "DELETE",
+                url: baseUrl + "/task/deleteTask",
+                data: {
+                    "taskId": taskId
+                }
+            }).done(() => {
+                getToDoList();
+            });
+        });
     });
+    
 
-    $("#taskList input:checkbox").change((e)=>{
-        var checkbox = e.target;
-        var parent = checkbox.parentNode;
-        var spanElement = parent.lastElementChild.firstElementChild.firstElementChild;
-        var html = spanElement.innerHTML;
-        if(checkbox.checked){
-            spanElement.innerHTML=`
-                <del>${html}</del>
-            `;
-        }
-        else{
-            var content = spanElement.firstElementChild.innerHTML;
-            spanElement.innerHTML=content;
-        }
-    })
+    function getToDoList(){
+        $("#taskList").html('<div id="spinner" class="show d-flex align-items-center justify-content-center w-100" > <div class="spinner-border text-primary text-center" style = "width: 3rem; height: 3rem;" role = "status" > <span class="sr-only" > Loading...</span></div > </div>');
+        $.get(baseUrl+"/task/getTasks", (data, status) => {
+            if(status=="success"){
+                var html="";
+                var tasks = JSON.parse(data);
+                tasks.forEach((data) => {
+                    html += `
+                            <div class="d-flex align-items-center border-bottom py-2" value="${data.Id}">
+                                    <input name="task" class="form-check-input m-0" type="checkbox" ${data.Status ? "" : "checked"}>
+                                    <div class="w-100 ms-3">
+                                        <div class="d-flex w-100 align-items-center justify-content-between" value="${data.Id}">
+                                            <span ${data.Status ? "" : "style='text-decoration:line-through'"}>${data.TaskText}</span>
+                                                <button class="btn btn-sm deleteTask"><i class="fa fa-times"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                    `;
+                })
+                $("#taskList").html(html);
+                $("#taskInput").val("");
+            }
+
+        })
+        
+    }
 </script>

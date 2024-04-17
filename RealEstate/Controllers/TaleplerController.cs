@@ -113,5 +113,31 @@ namespace RealEstate.Controllers
 
             return Ok();
         }
+
+        public async Task<IActionResult> Detay(string id)
+        {
+            var talep = await _talepService.GetWithAlici(UserId, id);
+            var semtler = JsonConvert.DeserializeObject<List<string>>(talep.Semtler);
+            var odalar = JsonConvert.DeserializeObject<List<string>>(talep.OdaSayisi);
+            ViewBag.SemtlerVeOdalar = new {
+                semtler=semtler,
+                odalar=odalar
+            };
+            return View(talep);
+        }
+
+        public string getCountOfTalepler()
+        {
+            var counts = _talepService.GetCountsOfTalepler();
+            var countsOfTalepler = JsonConvert.SerializeObject(counts);
+            return countsOfTalepler;
+        }
+
+        public string getSatilikKiralik()
+        {
+            var counts = _talepService.GetSatilikKiralik();
+            var countsOfSatilik = JsonConvert.SerializeObject(counts);
+            return countsOfSatilik;
+        }
     }
 }
