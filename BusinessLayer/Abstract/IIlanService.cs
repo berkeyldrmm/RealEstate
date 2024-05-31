@@ -16,8 +16,10 @@ namespace BusinessLayer.Abstract
         public Task<IlanTalepTipi> GetIlanTalepTipi(int id);
         void DeleteRange(IEnumerable<string> Ids);
         public Task<bool> IlanSat(string id, string kazanc);
-        public object GetCountsOfIlanlar();
-        public object GetSatilikKiralik();
-        public Task<IEnumerable<Ilan>> GetByFilters(string satilikKiralik, int ilanTipi, string satisDurumu, string minFiyat, string maxFiyat, string sirala, string search);
+        public object GetCountsOfIlanlar(string userId);
+        public object GetSatilikKiralik(string userId);
+        public Task<List<Ilan>> GetIlansForTalep(string userId, Talep talep);
+        public Task<List<(string ilanBaslik, decimal kazanc)>> GetKazancsOfMonth(string userId);
+        public Task<IEnumerable<Ilan>> GetByFilters(string userId, string satilikKiralik, int ilanTipi, string satisDurumu, string minFiyat, string maxFiyat, string sirala, string search);
     }
 }

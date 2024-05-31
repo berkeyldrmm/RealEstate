@@ -1,82 +1,82 @@
 ﻿@model Daire
 
-<div class="row">
-    <div class="col-6"><span>Metrekare Brüt</span> </div>
-    <div class="col-6"><span>@Model.MetrekareBrut</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Metrekare Net </span></div>
-    <div class="col-6"><span>@Model.MetrekareNet</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Ada No.</span> </div>
-    <div class="col-6"><span>@Model.AdaNo</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Parsel No.</span> </div>
-    <div class="col-6"><span>@Model.ParselNo</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Oda Sayısı</span> </div>
-    <div class="col-6"><span>@Model.OdaSayisi</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Asansör</span> </div>
-    <div class="col-6"><span>@(Model.Asansor ? "Var" : "Yok")</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Bulunduğu Kat </span></div>
-    <div class="col-6"><span>@Model.BulunduguKat</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Kat Sayısı </span></div>
-    <div class="col-6"><span>@Model.KatSayisi</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Kullanım Durumu </span></div>
-    <div class="col-6"><span>@Model.KullanimDurumu</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Bulunduğu Kat</span> </div>
-    <div class="col-6"><span>@Model.BulunduguKat</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Aidat </span></div>
-    <div class="col-6"><span>@Model.Aidat</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Bina Yaşı</span> </div>
-    <div class="col-6"><span>@Model.BinaYasi</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Isıtma</span> </div>
-    <div class="col-6"><span>@Model.Isıtma</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Krediye Uygun</span> </div>
-    <div class="col-6"><span>@(Model.KrediyeUygun ? "Evet" : "Hayır")</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Otopark </span></div>
-    <div class="col-6"><span>@(Model.Otopark ? "Var" : "Yok")</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Eşyalı </span></div>
-    <div class="col-6"><span>@(Model.EsyaliMi ? "Evet" : "Hayır")</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Balkon Sayısı</span> </div>
-    <div class="col-6"><span>@Model.BalkonSayisi</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Banyo Sayısı </span></div>
-    <div class="col-6"><span>@Model.BanyoSayisi</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Metrekare Fiyat </span></div>
-    <div class="col-6"><span>@Model.MetrekareFiyat</span></div>
-</div>
-<div class="row" style="border:none">
-    <div class="col-6"><span>Site </span></div>
-    <div class="col-6"><span>@(Model.SiteMi ? "Evet" : "Hayır")</span></div>
-</div>
+<tr>
+    <td scope="row">Metrekare Brüt </td>
+    <td>@Model.MetrekareBrut</td>
+</tr>
+<tr>
+    <td scope="row">Metrekare Net </td>
+    <td>@Model.MetrekareNet</td>
+</tr>
+<tr>
+    <td scope="row">Ada No. </td>
+    <td>@Model.AdaNo</td>
+</tr>
+<tr>
+    <td scope="row">Parsel No. </td>
+    <td>@Model.ParselNo</td>
+</tr>
+<tr>
+    <td scope="row">Oda Sayısı </td>
+    <td>@Model.OdaSayisi</td>
+</tr>
+<tr>
+    <td scope="row">Asansör </td>
+    <td>@(Model.Asansor ? "Var" : "Yok")</td>
+</tr>
+<tr>
+    <td scope="row">Bulunduğu Kat </td>
+    <td>@Model.BulunduguKat</td>
+</tr>
+<tr>
+    <td scope="row">Kat Sayısı </td>
+    <td>@Model.KatSayisi</td>
+</tr>
+<tr>
+    <td scope="row">Kullanım Durumu </td>
+    <td>@Model.KullanimDurumu</td>
+</tr>
+<tr>
+    <td scope="row">Bulunduğu Kat </td>
+    <td>@Model.BulunduguKat</td>
+</tr>
+<tr>
+    <td scope="row">Aidat </td>
+    <td>@Model.Aidat</td>
+</tr>
+<tr>
+    <td scope="row">Bina Yaşı </td>
+    <td>@Model.BinaYasi</td>
+</tr>
+<tr>
+    <td scope="row">Isıtma </td>
+    <td>@Model.Isıtma</td>
+</tr>
+<tr>
+    <td scope="row">Krediye Uygun </td>
+    <td>@(Model.KrediyeUygun ? "Evet" : "Hayır")</td>
+</tr>
+<tr>
+    <td scope="row">Otopark </td>
+    <td>@(Model.Otopark ? "Var" : "Yok")</td>
+</tr>
+<tr>
+    <td scope="row">Eşyalı </td>
+    <td>@(Model.EsyaliMi ? "Evet" : "Hayır")</td>
+</tr>
+<tr>
+    <td scope="row">Balkon Sayısı </td>
+    <td>@Model.BalkonSayisi</td>
+</tr>
+<tr>
+    <td scope="row">Banyo Sayısı </td>
+    <td>@Model.BanyoSayisi</td>
+</tr>
+<tr>
+    <td scope="row">Metrekare Fiyat </td>
+    <td>@Model.MetrekareFiyat</td>
+</tr>
+<tr>
+    <td scope="row">Site </td>
+    <td>@(Model.SiteMi ? "Evet" : "Hayır")</td>
+</tr>

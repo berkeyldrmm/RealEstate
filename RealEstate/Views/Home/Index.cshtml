@@ -61,6 +61,7 @@
 <!-- Widgets End -->
 <script>
     const baseUrl = "https://localhost:7191";
+
     $("#navHome").addClass("active");
     getToDoList();
     
@@ -107,6 +108,9 @@
             if(status=="success"){
                 var html="";
                 var tasks = JSON.parse(data);
+                if(tasks.length == 0 || tasks == "" || tasks == null){
+                    html="<div>Hiç görev yok.</div>";
+                }
                 tasks.forEach((data) => {
                     html += `
                             <div class="d-flex align-items-center border-bottom py-2" value="${data.Id}">
@@ -127,4 +131,14 @@
         })
         
     }
+
+
+
+
+
+
+
+
+
+
 </script>

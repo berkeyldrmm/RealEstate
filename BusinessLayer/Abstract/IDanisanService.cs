@@ -11,6 +11,7 @@ namespace BusinessLayer.Abstract
     public interface IDanisanService : IGenericService<Danisan>
     {
         public Task<IEnumerable<Danisan>> GetDanisanlarOfUser(string userId);
-        void DeleteRange(IEnumerable<string> Ids);
+        void DeleteRange(string userId, IEnumerable<string> Ids);
+        public IEnumerable<Danisan> SearchDanisan(string userId, string search);
     }
 }

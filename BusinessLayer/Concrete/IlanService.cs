@@ -2,12 +2,14 @@
 using DataAccessLayer;
 using DataAccessLayer.Abstract;
 using EntityLayer.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BusinessLayer.Concrete
 {
@@ -70,17 +72,17 @@ namespace BusinessLayer.Concrete
             return _ilanRepository.IlanSat(id, kazanc);
         }
 
-        public object GetCountsOfIlanlar()
+        public object GetCountsOfIlanlar(string userId)
         {
-            return _ilanRepository.GetCountsOfIlanlar();
+            return _ilanRepository.GetCountsOfIlanlar(userId);
         }
 
-        public object GetSatilikKiralik()
+        public object GetSatilikKiralik(string userId)
         {
-            return _ilanRepository.GetSatilikKiralik();
+            return _ilanRepository.GetSatilikKiralik(userId);
         }
 
-        public Task<IEnumerable<Ilan>> GetByFilters(string satilikKiralik, int ilanTipi, string satisDurumu, string minFiyat, string maxFiyat, string sirala, string search)
+        public Task<IEnumerable<Ilan>> GetByFilters(string userId, string satilikKiralik, int ilanTipi, string satisDurumu, string minFiyat, string maxFiyat, string sirala, string search)
         {
             var expressions = new List<Expression<Func<Ilan, bool>>>();
 
@@ -93,26 +95,57 @@ namespace BusinessLayer.Concrete
             if (satisDurumu != "-1")
                 expressions.Add(i => i.SatisDurumu == Convert.ToBoolean(Convert.ToInt16(satisDurumu)));
 
-            if(minFiyat != null && minFiyat.Length > 3)
+            if(minFiyat != null && minFiyat.Length > 2)
             {
                 var minimumFiyat = Convert.ToDecimal(minFiyat);
                 if (minimumFiyat > 0)
                     expressions.Add(i => i.PortfoyFiyati >= minimumFiyat);
             }
 
-            if (maxFiyat!=null && maxFiyat.Length > 3)
+            if (maxFiyat!=null && maxFiyat.Length > 2)
             {
                 var maximumFiyat = Convert.ToDecimal(maxFiyat);
                 if (maximumFiyat > 0)
                     expressions.Add(i => i.PortfoyFiyati <= maximumFiyat);
             }
 
-            if (search != null && search.Length > 3)
+            if (search != null && search.Length > 2)
             {
                 expressions.Add(i => i.IlanBaslik.Contains(search) || i.Sehir.Contains(search) || i.Semt.Contains(search) || i.Mahalle.Contains(search) || i.Satici.AdSoyad.Contains(search));
             }
 
-            return _ilanRepository.GetByFilters(expressions, sirala);
+            return _ilanRepository.GetByFilters(userId, expressions, sirala);
+        }
+
+        public async Task<List<Ilan>> GetIlansForTalep(string userId, Talep talep)
+        {
+            List<Expression<Func<Ilan, bool>>> expressions = new List<Expression<Func<Ilan, bool>>>();
+
+            expressions.Add(i => JsonConvert.DeserializeObject<List<string>>(talep.Semtler).ToList().Any(s => s == i.Semt) && talep.Sehir==i.Sehir);
+
+            expressions.Add(i => talep.MinFiyat <= i.PortfoyFiyati && talep.MaxFiyat >= i.PortfoyFiyati);
+
+            if (talep.IlanTalepTipiId == 5)
+            {
+                expressions.Add(i => JsonConvert.DeserializeObject<List<string>>(talep.OdaSayisi).ToList().Any(o => o == i.Daire.OdaSayisi));
+            }
+            else if (talep.IlanTalepTipiId == 1)
+            {
+                expressions.Add(i => JsonConvert.DeserializeObject<List<string>>(talep.OdaSayisi).ToList().Any(o => o == i.Dukkan.OdaSayisi));
+            }
+
+            expressions.Add(i => talep.SatilikMiKiralikMi == i.SatilikMiKiralikMi);
+
+            expressions.Add(i => talep.IlanTalepTipiId == i.IlanTalepTipiId);
+
+            expressions.Add(i => i.SatisDurumu==false);
+
+            return await _ilanRepository.GetIlansForTalep(userId, expressions);
+        }
+
+        public async Task<List<(string ilanBaslik, decimal kazanc)>> GetKazancsOfMonth(string userId)
+        {
+            return await _ilanRepository.GetKazancsOfMonth(userId);
         }
     }
 }

@@ -193,7 +193,7 @@ input[type="radio"]{
             <div class="form-group">
                 <label>Oda sayısı</label>
                 <select asp-for="OdaSayisi" class="form-control" data-portfoy="[1,5]">
-                    <option value="1+0 (Stüdyo)">1+0 (Stüdyo)</option>
+                    <option value="1+0">1+0 (Stüdyo)</option>
                     <option value="1+1">1+1</option>
                     <option value="2+0">2+0</option>
                     <option value="2+1">2+1</option>
@@ -458,6 +458,13 @@ input[type="radio"]{
             else {
                 $("#komisyon").css("display","none");
                 $("#ozelKomisyon").css("display","block");
+            }
+
+            if ($("input[name='SatilikMiKiralikMi']").val() == "1") {
+                $("#komisyon").html("Komisyon: " + parseInt($("#fiyat").val()) * 4 / 100);
+            }
+            else {
+                $("#komisyon").html("Komisyon: " + $("#fiyat").val());
             }
         });
 

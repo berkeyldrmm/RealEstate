@@ -13,8 +13,10 @@ namespace BusinessLayer.Abstract
         public Task<IEnumerable<Talep>> GetAllWithAlici(string userId);
         public Task<Talep> GetWithAlici(string userId, string id);
         public Task<IlanTalepTipi> GetIlanTalepTipi(int id);
-        void DeleteRange(IEnumerable<string> Ids);
-        public object GetCountsOfTalepler();
-        public object GetSatilikKiralik();
+        void DeleteRange(string userId, IEnumerable<string> Ids);
+        public object GetCountsOfTalepler(string userId);
+        public object GetSatilikKiralik(string userId);
+        public Task<List<Talep>> GetTalepsForIlan(string userId, Ilan ilan);
+        public Task<IEnumerable<Talep>> GetByFilters(string userId, string satilikKiralik, int ilanTipi, string sirala, string search);
     }
 }

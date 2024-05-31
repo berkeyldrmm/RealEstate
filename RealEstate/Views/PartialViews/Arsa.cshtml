@@ -1,34 +1,34 @@
 ﻿@model Arsa
 
-<div class="row">
-    <div class="col-6"><span>Metrekare Net</span> </div>
-    <div class="col-6"><span>@Model.MetrekareNet</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Ada No.</span> </div>
-    <div class="col-6"><span>@Model.AdaNo</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Parsel No.</span> </div>
-    <div class="col-6"><span>@Model.ParselNo</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Pafta No.</span> </div>
-    <div class="col-6"><span>@Model.PaftaNo</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Tapu Durumu</span> </div>
-    <div class="col-6"><span>@(Model.TapuDurumu ? "Var" : "Yok")</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>Metrekare Fiyat</span> </div>
-    <div class="col-6"><span>@Model.MetrekareFiyat</span></div>
-</div>
-<div class="row">
-    <div class="col-6"><span>İmar Durumu</span> </div>
-    <div class="col-6"><span>@(Model.ImarDurumu ? "Var" : "Yok")</span></div>
-</div>
-<div class="row" style="border:none">
-    <div class="col-6"><span>Kat Karşılığına Uygun</span> </div>
-    <div class="col-6"><span>@(Model.KatKarsiliginaUygun ? "Evet" : "Hayır")</span></div>
-</div>
+<tr>
+    <td scope="row">Metrekare Net </td>
+    <td>@Model.MetrekareNet</td>
+</tr>
+<tr>
+    <td scope ="row">Ada No. </td>
+    <td>@Model.AdaNo</td>
+</tr>
+<tr>
+    <td scope="row">Parsel No. </td>
+    <td>@Model.ParselNo</td>
+</tr>
+<tr>
+    <td scope="row">Pafta No. </td>
+    <td>@Model.PaftaNo</td>
+</tr>
+<tr>
+    <td scope="row">Tapu Durumu </td>
+    <td>@(Model.TapuDurumu ? "Var" : "Yok")</td>
+</tr>
+<tr>
+    <td scope="row">Metrekare Fiyat </td>
+    <td>@Model.MetrekareFiyat</td>
+</tr>
+<tr>
+    <td scope="row">İmar Durumu </td>
+    <td>@(Model.ImarDurumu ? "Var" : "Yok")</td>
+</tr>
+<tr>
+    <td scope="row">Kat Karşılığına Uygun </td>
+    <td>@(Model.KatKarsiliginaUygun ? "Evet" : "Hayır")</td>
+</tr>

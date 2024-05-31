@@ -33,7 +33,7 @@ namespace RealEstate.Controllers
         {
             if(ModelState.IsValid)
             {
-                User? user = await _userManager.FindByEmailAsync(model.Mail);
+                User? user = await _userManager.FindByNameAsync(model.Mail);
                 if (user == null)
                 {
                     ViewBag.error = "Mail adresi veya şifre hatalı";
@@ -76,7 +76,7 @@ namespace RealEstate.Controllers
         {
             if (ModelState.IsValid)
             {
-                User? user = await _userManager.FindByNameAsync(User.Identity.Name);
+                User? user = await _userManager.FindByEmailAsync(User.Identity.Name);
                 var result = await _userManager.ChangePasswordAsync(user, changePasswordModelDTO.OldPassword,changePasswordModelDTO.NewPassword);
                 if (result.Succeeded)
                 {

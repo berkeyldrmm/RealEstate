@@ -1,0 +1,94 @@
+﻿@model List<(string ilanBaslik, decimal kazanc)>
+
+<div class="container-fluid pt-4 px-4 w-100" style="background-color: #F8F9D7; height:95%;">
+    <h2>Muhasebe Ekranı</h2>
+    @{
+        string month = "";
+        int monthInt = DateTime.Now.Month;
+        switch (monthInt)
+        {
+            case 1:
+                month = "Ocak";
+                break;
+            case 2:
+                month = "Şubat";
+                break;
+            case 3:
+                month = "Mart";
+                break;
+            case 4:
+                month = "Nisan";
+                break;
+            case 5:
+                month = "Mayıs";
+                break;
+            case 6:
+                month = "Haziran";
+                break;
+            case 7:
+                month = "Temmuz";
+                break;
+            case 8:
+                month = "Ağustos";
+                break;
+            case 9:
+                month = "Eylül";
+                break;
+            case 10:
+                month = "Ekim";
+                break;
+            case 11:
+                month = "Kasım";
+                break;
+            case 12:
+                month = "Aralık";
+                break;
+            default:
+                break;
+        }
+        <h5>@month ayı gelir gider tablosu</h5>
+    }
+    <div class="d-grid">
+        <div class="row">
+            <div class="col-6 d-flex flex-column align-items-center">
+                <partial name="../PartialViews/GelirEkleFormPartial"></partial>
+                <partial name="../PartialViews/GiderEkleFormPartial"></partial>
+               
+            </div>
+            <div class="col-6 d-flex justify-content-between align-items-center">
+                <div class="d-grid w-75">
+                    <div class="row">
+                        <h6>Bu ayki satış/kiralamaların kazançları</h6>
+                    </div>
+                        @foreach (var kazanc in Model)
+                        {
+                            <div class="row">
+                                <div class="col-6">
+                                    @kazanc.ilanBaslik :
+                                </div>
+                                <div class="col-6">
+                                    @kazanc.kazanc.ToString() TL
+                                </div>
+                            </div>
+                        }
+                        <div class="row">
+                            <div class="col-6">
+                                <b>Toplam:</b>
+                            </div>
+                            <div class="col-6">
+                                <b>@Model.Select(t=>t.kazanc).Sum().ToString() TL</b>
+                            </div>
+                        </div>
+                    
+                    <hr />
+
+                    @await Component.InvokeAsync("GetGelirlerComponent", new {user = ViewBag.User, kazanc=Model.Select(t=>t.kazanc).Sum()})
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+        $("#navMuhasebe").addClass("active");
+</script>

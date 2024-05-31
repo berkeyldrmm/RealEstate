@@ -44,79 +44,93 @@
 <h1 class="text-center mt-4">@Model.IlanBaslik</h1>
 <div class="d-flex justify-content-between pt-4">
     <div class="container d-grid">
-        <div class="row">
-            <div class="col-6"><span>Satıcı isim soyisim </span></div>
-            <div class="col-6"><span>@Model.Satici.AdSoyad</span></div>
-        </div>
-        <div class="row">
-            <div class="col-6"><span>Satıcı telefon numarası</span> </div>
-            <div class="col-6"><span>@Model.Satici.TelefonNo</span></div>
-        </div>
-        <div class="row">
-            <div class="col-6"><span>Satıcı mail adresi</span> </div>
-            <div class="col-6"><span>@Model.Satici.MailAdresi</span></div>
-        </div>
-        <div class="row">
-            <div class="col-6"><span>İlan tipi</span> </div>
-            <div class="col-6"><span>@Model.IlanTalepTipi.TipAdi</span></div>
-        </div>
+        <table class="table table-striped">
         
-        <div class="row">
-            <div class="col-6"><span>Satılık/Kiralık</span> </div>
-            <div class="col-6"><span>@Model.SatilikMiKiralikMi</span></div>
-        </div>
-        <div class="row">
-            <div class="col-6"><span>Adres </span></div>
-            <div class="col-6"><span>@Model.Mahalle, @Model.Semt, @Model.Sehir</span></div>
-        </div>
-        <div class="row">
-            <div class="col-6"><span>Fiyat</span> </div>
-            <div class="col-6"><span>@Model.PortfoyFiyati</span></div>
-        </div>
-        <div class="row">
-            <div class="col-6"><span>Komisyon</span> </div>
-            <div class="col-6"><span>@Model.Komisyon</span></div>
-        </div>
-        <div class="row">
-            <div class="col-6"><span>Satış durumu</span> </div>
-            <div class="col-6"><span>@(Model.SatisDurumu ? "Satıldı" : "Alıcı bekliyor")</span></div>
-        </div>
-        @if (Model.SatisDurumu)
-        {
-            <div class="row">
-                <div class="col-6"><span>Kazanç </span></div>
-                <div class="col-6"><span>@Model.Kazanc</span></div>
-            </div>
-        }
-        <div class="row" style="border:none">
-            <div class="col-6"><span>İlan kayıt tarihi</span> </div>
-            <div class="col-6"><span>@Model.KayitTarihi</span></div>
-        </div>
+            <tbody>
+                <tr>
+                    <th scope="row">Satıcı isim soyisim</th>
+                    <td>@Model.Satici.AdSoyad</td>
+                </tr>
+                <tr>
+                    <th scope="row">Satıcı telefon numarası</th>
+                    <td>@Model.Satici.TelefonNo</td>
+                </tr>
+                <tr>
+                    <th scope="row">Satıcı mail adresi</th>
+                    <td>@Model.Satici.MailAdresi</td>
+                </tr>
+                <tr>
+                    <th scope="row">İlan tipi</th>
+                    <td>@Model.IlanTalepTipi.TipAdi</td>
+                </tr>
+                <tr>
+                    <th scope="row">Satılık / Kiralık</th>
+                    <td>@Model.SatilikMiKiralikMi</td>
+                </tr>
+                <tr>
+                    <th scope="row">Adres</th>
+                    <td>@Model.Mahalle, @Model.Semt, @Model.Sehir</td>
+                </tr>
+                <tr>
+                    <th scope="row">Fiyat</th>
+                    <td>@Model.PortfoyFiyati</td>
+                </tr>
+                <tr>
+                    <th scope="row">Komisyon</th>
+                    <td>@Model.Komisyon</td>
+                </tr>
+                <tr>
+                    <th scope="row">Satış Durumu</th>
+                    <td>@(Model.SatisDurumu ? "Satıldı" : "Alıcı bekliyor")</td>
+                </tr>
+                @if (Model.SatisDurumu)
+                {
+                    <tr>
+                        <th scope="row">Kazanç</th>
+                        <td>@Model.Kazanc</td>
+                    </tr>
+                }
+                <tr>
+                    <th scope="row">İlan kayıt tarihi</th>
+                    <td>@Model.KayitTarihi</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-
     <div class="container d-grid">
-        @if (Model.IlanTalepTipi.Id == 1)
-        {
-            <partial name="../PartialViews/Dukkan" model=@Model.Dukkan></partial>
-        }
-        @if (Model.IlanTalepTipi.Id == 2)
-        {
-            <partial name="../PartialViews/Arsa" model=@Model.Arsa></partial>
-        }
-        @if (Model.IlanTalepTipi.Id == 3)
-        {
-            <partial name="../PartialViews/Depo" model=@Model.Depo></partial>
-        }
-        @if (Model.IlanTalepTipi.Id == 4)
-        {
-            <partial name="../PartialViews/Tarla" model=@Model.Tarla></partial>
-        }
-        @if (Model.IlanTalepTipi.Id == 5)
-        {
-            <partial name="../PartialViews/Daire" model=@Model.Daire></partial>
-        }
+        <table class="table table-striped">
+            <tbody>
+            @if (Model.IlanTalepTipi.Id == 1)
+            {
+                <partial name="../PartialViews/Dukkan" model=@Model.Dukkan></partial>
+            }
+            @if (Model.IlanTalepTipi.Id == 2)
+            {
+                <partial name="../PartialViews/Arsa" model=@Model.Arsa></partial>
+            }
+            @if (Model.IlanTalepTipi.Id == 3)
+            {
+                <partial name="../PartialViews/Depo" model=@Model.Depo></partial>
+            }
+            @if (Model.IlanTalepTipi.Id == 4)
+            {
+                <partial name="../PartialViews/Tarla" model=@Model.Tarla></partial>
+            }
+            @if (Model.IlanTalepTipi.Id == 5)
+            {
+                <partial name="../PartialViews/Daire" model=@Model.Daire></partial>
+            }
+            </tbody>
+        </table>
     </div>
 </div>
 <div class="container w-100 mt-5">
     Detaylar : @Model.Detaylar
+</div>
+<div class="mt-4">
+    <div class="container-fluid pt-4 px-4">
+    <h3>Bu ilan için uygun olan talepler</h3>
+
+    @await Component.InvokeAsync("GetTalepsOfIlanComponent", new { userId = ViewBag.UserId, ilanId = Model.Id })
+    </div>
 </div>

@@ -1,0 +1,9 @@
+﻿<form asp-action="GelirGiderEkle" method="post" asp-controller="muhasebe" class="w-75">
+    <div class="form-group w-100">
+        <label for="gider">Gider giriniz</label>
+        <input name="GelirGider" type="hidden" value="Gider" />
+        <input name="Name" id="gider" type="text" class="form-control mt-1" placeholder="Gider ismi" />
+        <input name="Cost" type="number" class="form-control mt-1" placeholder="Gider miktarı" />
+        <button type="submit" class="btn btn-danger mt-4">Gider ekle</button>
+    </div>
+</form>

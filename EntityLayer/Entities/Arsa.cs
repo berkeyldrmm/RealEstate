@@ -6,10 +6,6 @@ namespace EntityLayer.Entities;
 
 public partial class Arsa : Portfoy
 {
-    public string Id { get; set; }
-    public string MetrekareNet { get; set; }
-    public decimal? MetrekareFiyat { get; set; }
-    public Ilan? Ilan { get; set; }
     public bool ImarDurumu { get; set; }
     public string? AdaNo { get; set; }
     public string? ParselNo { get; set; }

@@ -1,0 +1,66 @@
+﻿@using RealEstate.Models;
+@model List<GelirGiderModel>
+
+<h6>Bu ayki diğer gelirler</h6>
+
+@foreach (var item in Model)
+{
+    if (item.GelirGider.ToLower() == "gelir")
+    {
+        <div class="row">
+            <div class="col-6">
+                @item.Name :
+            </div>
+            <div class="col-6">
+                @item.Cost TL
+            </div>
+        </div>
+    }
+}
+<div class="row">
+    <div class="col-6">
+        <b>Toplam :</b>
+    </div>
+    <div class="col-6">
+        <b>@Model.Where(i=>i.GelirGider.ToLower()=="gelir").Select(i=>Convert.ToInt32(i.Cost)).Sum().ToString() TL</b>
+    </div>
+</div>
+
+<hr />
+
+<h6>Bu ayki giderler</h6>
+
+@foreach (var item in Model)
+{
+    if (item.GelirGider.ToLower() == "gider")
+    {
+        <div class="row">
+            <div class="col-6">
+                @item.Name :
+            </div>
+            <div class="col-6">
+                -@item.Cost TL
+            </div>
+        </div>
+    }
+}
+
+<div class="row">
+    <div class="col-6">
+        <b>Toplam :</b>
+    </div>
+    <div class="col-6">
+        <b>-@Model.Where(i=>i.GelirGider.ToLower()=="gider").Select(i=>Convert.ToInt32(i.Cost)).Sum().ToString() TL</b>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-6">
+        <b>Net kar-zarar :</b>
+    </div>
+    <div class="col-6">
+        <b>@((ViewBag.kazanc + Model.Where(i => i.GelirGider.ToLower() == "gelir").Select(i => Convert.ToInt32(i.Cost)).Sum() - Model.Where(i => i.GelirGider.ToLower() == "gider").Select(i => Convert.ToInt32(i.Cost)).Sum()).ToString()) TL</b>
+    </div>
+</div>

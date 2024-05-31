@@ -4,12 +4,13 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 
-
-
-
 <div class="container-fluid pt-4 px-4">
         <div class="bg-secondary rounded p-4">
-
+            <div class="d-flex justify-content-center mx-2 mb-3">
+                <div class="btn-group">
+                    <input class="form-control border-0" type="search" id="search" placeholder="Ara">
+                </div>
+            </div>
             <div class="container d-flex justify-content-center">
                 <div class="grid-margin stretch-card">
                     <div class="card">
@@ -49,6 +50,12 @@
                     Danışan Sil
                 </button>
             </div>
+        <div class="d-flex justify-content-center" id="paginationContainer">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                </ul>
+            </nav>
+        </div>
         </div>
 
     @if (TempData["error"] != null)
@@ -98,11 +105,81 @@
                 danisanIds.push(value.value);
             }
         });
-        console.log(danisanIds);
+
         $.post("https://localhost:7191/danisanlar/danisanSil", { idsJson:JSON.stringify(danisanIds)}, (data,status) => {
             if(status="success"){
                 location.reload()
             }
         });
+    }
+
+    var danisanlar=[];
+    function getByFilters() {
+        let search = $("#search").val();
+
+        $("tbody").html('<div class="show d-flex align-items-center justify-content-center w-100"><div class="spinner-border text-primary text-center" style = "width: 3rem; height: 3rem;" role = "status"><span class="sr-only" > Loading...</span></div></div>');
+        $.get("https://localhost:7191/danisanlar/searchDanisan", {
+            search: search
+        }, (data, status) => {
+            if (status == "success") {
+                danisanlar = JSON.parse(data);
+
+                let count = danisanlar.length;
+                let pageCount = count / 20;
+                let netPageCount = Math.floor(pageCount);
+                if (pageCount - netPageCount > 0) {
+                    netPageCount++;
+                }
+                showPageContainer(netPageCount);
+
+                showDanisanlar(1);
+            }
+        }
+        ).fail(function (xhr, status) {
+            $("tbody").html(`<div class='alert-danger text-center'>Bir hata oluştu. Hata: ${xhr} - ${status}</div>`);
+        });
+    }
+
+    $("#search").keyup(() => {
+        if ($("#search").val().length > 2 || $("#search").val().length == 0) {
+            getByFilters();
+        }
+    });
+
+    function showPageContainer(netPageCount) {
+        let html = "";
+        for (i = 1; i <= netPageCount; i++) {
+            html += `
+                         <li class="page-item"><button type="button" onclick="showDanisanlar(${i})" class="page-link">${i}</button></li>
+                    `
+        }
+
+        $("#paginationContainer").html(html);
+    }
+
+    function showDanisanlar(pageNumber) {
+        let startIndex = (pageNumber - 1) * 20;
+        let finishIndex = pageNumber * 20;
+        let html = "";
+        if(danisanlar.length == 0){
+            $("tbody").html(`<div class='alert-warning text-center'>Danışan bulunamadı.</div>`);
+        }
+        for (i = startIndex; i < finishIndex; i++) {
+            if (danisanlar[i] != null || danisanlar[i] != undefined) {
+                html += `
+                                 <tr>
+                                                    <td><input name="danisanlar" class="form-check-input" type="checkbox" value=${danisanlar[i].Id}></td>
+                                                    <td>${danisanlar[i].AdSoyad}</td>
+                                                    <td>${danisanlar[i].TelefonNo}</td>
+                                                    <td>${danisanlar[i].MailAdresi}</td>
+                                                </tr>
+                    `
+                $("tbody").html(html);
+            }
+            else {
+                break;
+            }
+        };
+
     }
 </script>

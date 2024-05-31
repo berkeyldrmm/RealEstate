@@ -153,6 +153,10 @@
     <div class="d-grid">
         <div class="row w-100">
             <div class="form-group w-25">
+                <label>Başlık</label>
+                <input type="text" name="talepBaslik" class="form-control" placeholder="Talep Başlık">
+            </div>
+            <div class="form-group w-25">
                 <label>İlan Tipi</label>
                 <select class="form-control" id="ilanTipiInput" data-portfoy="[1,2,3,4,5]">
                     <option value="2">Arsa</option>
@@ -212,7 +216,7 @@
         <div class="row">
             <div class="form-group">
                 <label>Şehir</label>
-                <select class="form-control" id="selectCity" data-portfoy="[1,2,3,4,5]">
+                    <select class="form-control" id="selectCity" data-portfoy="[1,2,3,4,5]">
                 </select>
             </div>
 
@@ -304,6 +308,8 @@
             const minFiyat = $("#minFiyat").val();
             const maxFiyat = $("#maxFiyat").val();
             const detaylar = $("textarea#detaylar").val();
+            const talepBaslik = $("input[name='talepBaslik']").val();
+            const city = $("#selectCity").val();
 
             var odaSayisi = [];
             var odaSayisiOptions = $("input[name='odaSayisi']");
@@ -322,6 +328,7 @@
             });
 
             $.post("https://localhost:7191/talepler/talepekle", {talepJson : JSON.stringify({
+                "talepBaslik":talepBaslik,
                 "radioForAlici": radioForAlici,
                 "aliciId": aliciId,
                 "aliciIsimSoyisim": aliciIsimSoyisim,
@@ -334,7 +341,8 @@
                 "odaSayisi": odaSayisi,
                 "minFiyat": minFiyat,
                 "maxFiyat": maxFiyat,
-                "detaylar": detaylar
+                "detaylar": detaylar,
+                "sehir": city
             }
                 )
             }).done((data, status) => {

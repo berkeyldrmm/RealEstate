@@ -24,11 +24,10 @@ namespace RealEstate.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var ilanlar = await _ilanService.GetAllWithSatici(UserId);
-
-            return View(ilanlar);
+            ViewBag.UserId = UserId;
+            return View();
         }
 
         public IActionResult IlanEkle()
@@ -203,8 +202,10 @@ namespace RealEstate.Controllers
                 var result = await _ilanService.Insert(ilan);
                 int saved = await _unitOfWork.SaveChanges();
                 if (result && saved > 0)
+                {
+                    TempData["successIlanKayit"] = "İlan kaydı başarıyla gerçekleşti.";
                     return RedirectToAction("Index");
-
+                }
                 ViewBag.error = "İlan eklenirken bir hata oluştu. Lütfen tekrar deneyiniz.";
             }
             return View();
@@ -225,34 +226,34 @@ namespace RealEstate.Controllers
 
         public async Task<IActionResult> Detay(string id)
         {
-            var ilan = await _ilanService.GetWithSatici(UserId,id);
+            var ilan = await _ilanService.GetWithSatici(UserId, id);
+            ViewBag.UserId = UserId;
             return View(ilan);
         }
 
         public string getCountOfIlanlar()
         {
-            var counts = _ilanService.GetCountsOfIlanlar();
+            var counts = _ilanService.GetCountsOfIlanlar(UserId);
             var countsOfIlanlar = JsonConvert.SerializeObject(counts);
             return countsOfIlanlar;
         }
 
         public string getSatilikKiralik()
         {
-            var counts = _ilanService.GetSatilikKiralik();
+            var counts = _ilanService.GetSatilikKiralik(UserId);
             var countsOfSatilik = JsonConvert.SerializeObject(counts);
             return countsOfSatilik;
         }
 
-        public async Task<string> getByFilters(string satilikKiralik, int ilanTipi, string satisDurumu, string minFiyat, string maxFiyat, string sirala, string search)
+        public async Task<string> getByFilters(string userId, string satilikKiralik, int ilanTipi, string satisDurumu, string minFiyat, string maxFiyat, string sirala, string search)
         {
-            var ilanlar = await _ilanService.GetByFilters(satilikKiralik, ilanTipi, satisDurumu, minFiyat, maxFiyat, sirala, search);
+            var ilanlar = await _ilanService.GetByFilters(userId, satilikKiralik, ilanTipi, satisDurumu, minFiyat, maxFiyat, sirala, search);
             var result = JsonConvert.SerializeObject(ilanlar, Formatting.Indented,
                 new JsonSerializerSettings
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 });
             return result;
-            //return Json(ilanlar);
         }
     }
 }

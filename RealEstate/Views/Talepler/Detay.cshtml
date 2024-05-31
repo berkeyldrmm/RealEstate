@@ -42,69 +42,81 @@
 @*<h1 class="text-center mt-4">@Model.IlanBaslik</h1>*@
 <div class="d-flex justify-content-between pt-4">
     <div class="container d-grid">
-        <div class="row">
-            <div class="col-6"><span>Satıcı isim soyisim </span></div>
-            <div class="col-6"><span>@Model.Alici.AdSoyad</span></div>
-        </div>
-        <div class="row">
-            <div class="col-6"><span>Satıcı mail adresi </span> </div>
-            <div class="col-6"><span>@Model.Alici.MailAdresi</span></div>
-        </div>
-        <div class="row">
-            <div class="col-6"><span>İlan tipi </span> </div>
-            <div class="col-6"><span>@Model.IlanTalepTipi.TipAdi</span></div>
-        </div>
-        
-        <div class="row">
-            <div class="col-6"><span>Satılık/Kiralık </span> </div>
-            <div class="col-6"><span>@Model.SatilikMiKiralikMi</span></div>
-        </div>
-        @if (ViewBag.SemtlerVeOdalar.semtler.Count != 0)
-        {
-            <div class="row">
-                <div class="col-6"><span>Semtler </span></div>
-                <div class="col-6">@{
-                        var semtler = "";
-                        foreach (var semt in ViewBag.SemtlerVeOdalar.semtler)
-                        {
-                            semtler += semt + ", ";
-                        }
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <th scope="row">Satıcı isim soyisim </th>
+                    <td>@Model.Alici.AdSoyad</td>
+                </tr>
+                <tr>
+                    <th scope="row">Satıcı mail adresi  </th>
+                    <td>@Model.Alici.MailAdresi</td>
+                </tr>
+                <tr>
+                    <th scope="row">İlan tipi  </th>
+                    <td>@Model.IlanTalepTipi.TipAdi</td>
+                </tr>
 
-                        var semtlerListe = semtler.Remove(semtler.Length - 2);
-                        <span>@semtlerListe</span>
-                    }</div>
-            </div>
-        }
-        <div class="row">
-            <div class="col-6"><span>Fiyat Aralığı</span> </div>
-            <div class="col-6"><span>@Model.MinFiyat - @Model.MaxFiyat</span></div>
-        </div>
-        @if (ViewBag.SemtlerVeOdalar.odalar.Count != 0)
-        {
-            <div class="row">
-                <div class="col-6"><span>Oda Sayısı </span></div>
-                <div class="col-6">
-                    @{
-                        var odalar = "";
-                        foreach (var oda in ViewBag.SemtlerVeOdalar.odalar)
-                        {
-                            odalar += oda + ", ";
-                        }
+                <tr>
+                    <th scope="row">Satılık/Kiralık  </th>
+                    <td>@Model.SatilikMiKiralikMi</td>
+                </tr>
+                @if (ViewBag.SemtlerVeOdalar.semtler.Count != 0)
+                {
+                    <tr>
+                        <th scope="row">Semtler </th>
+                        <td>
+                            @{
+                                var semtler = "";
+                                foreach (var semt in ViewBag.SemtlerVeOdalar.semtler)
+                                {
+                                    semtler += semt + ", ";
+                                }
 
-                        var odalarListe = odalar.Remove(odalar.Length - 2);
-                        <span>@odalarListe</span>
-                    }
-                </div>
-            </div>
-        }
+                                var semtlerListe = semtler.Remove(semtler.Length - 2);
+                                @semtlerListe
+                            }
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <th scope="row">Fiyat Aralığı </th>
+                    <td>@Model.MinFiyat - @Model.MaxFiyat</td>
+                </tr>
+                @if (ViewBag.SemtlerVeOdalar.odalar.Count != 0)
+                {
+                    <tr>
+                        <th scope="row">Oda Sayısı </th>
+                        <td>
+                            @{
+                                var odalar = "";
+                                foreach (var oda in ViewBag.SemtlerVeOdalar.odalar)
+                                {
+                                    odalar += oda + ", ";
+                                }
 
-        <div class="row" style="border:none">
-            <div class="col-6"><span>Talep kayıt tarihi</span></div>
-            <div class="col-6"><span>@Model.KayitTarihi</span></div>
-        </div>
+                                var odalarListe = odalar.Remove(odalar.Length - 2);
+                                @odalarListe
+                            }
+                        </td>
+                    </tr>
+                }
+
+                <tr style="border:none">
+                    <th scope="row">Talep kayıt tarihi</th>
+                    <td>@Model.KayitTarihi</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-
 </div>
 <div class="container w-100 mt-5">
     Detaylar : @Model.Detaylar
+</div>
+<div class="mt-4">
+    <div class="container-fluid pt-4 px-4">
+    <h3>Bu talep için uygun olan ilanlar</h3>
+
+     @await Component.InvokeAsync("GetIlansOfTalepComponent", new { userId = ViewBag.UserId, talepId = Model.Id })
+    </div>
 </div>

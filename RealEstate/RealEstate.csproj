@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
+    <UserSecretsId>bc918aa9-73d0-436a-ae99-e5e626f5d9f1</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -15,6 +16,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>False</Optimize>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\img\IlanGorseller\**" />
+    <Content Remove="wwwroot\img\IlanGorseller\**" />
+    <EmbeddedResource Remove="wwwroot\img\IlanGorseller\**" />
+    <None Remove="wwwroot\img\IlanGorseller\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.9.0" />
@@ -38,10 +46,6 @@
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
     <ProjectReference Include="..\DTOLayer\DTOLayer.csproj" />
     <ProjectReference Include="..\EntityLayer\EntityLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\img\IlanGorseller\" />
   </ItemGroup>
 
 </Project>

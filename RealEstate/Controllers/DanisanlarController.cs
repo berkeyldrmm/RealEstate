@@ -30,7 +30,7 @@ namespace RealEstate.Controllers
         public async Task<IActionResult> DanisanSil(string idsJson)
         {
             var danisanlarIds = JsonConvert.DeserializeObject<List<string>>(idsJson);
-            _danisanService.DeleteRange(danisanlarIds);
+            _danisanService.DeleteRange(UserId, danisanlarIds);
             var result = await _unitOfWork.SaveChanges();
             if (result <= 0)
             {
@@ -38,6 +38,16 @@ namespace RealEstate.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
             return Ok();
+        }
+
+        public string SearchDanisan(string search)
+        {
+            IEnumerable<Danisan> danisanlar = _danisanService.SearchDanisan(UserId, search);
+            return JsonConvert.SerializeObject(danisanlar, Formatting.Indented,
+                new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
         }
     }
 }

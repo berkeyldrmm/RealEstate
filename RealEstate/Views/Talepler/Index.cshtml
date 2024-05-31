@@ -1,48 +1,59 @@
-﻿@model IEnumerable<Talep>
-
-<link rel="stylesheet" href="~/css/table.css" />
+﻿<link rel="stylesheet" href="~/css/table.css" />
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-
-
-
 <div class="container-fluid pt-4 px-4">
+    @if (TempData["successTalepKayit"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["successTalepKayit"]
+        </div>
+
+        <script>
+
+            $(".alert").fadeIn(2000, () => {
+                setTimeout(() => {
+                    $(".alert").fadeOut();
+                }, 2000)
+            });
+
+        </script>
+    }
     <form asp-controller="ilanlar" asp-action="ilanSil" method="post">
         <div class="bg-secondary rounded p-4">
             <div class="d-flex justify-content-between mx-2 mb-3">
                 <div class="d-flex flex-column">
                     <span>Satılık/Kiralık</span>
                     <div class="btn-group">
-                        <input type="radio" class="btn-check" name="satilikKiralik" id="Satılık" autocomplete="off" />
+                        <input type="radio" class="btn-check" name="satilikKiralik" id="Satılık" value="Satılık" autocomplete="off" />
                         <label class="btn btn-primary" for="Satılık">Satılık</label>
 
-                        <input type="radio" class="btn-check" name="satilikKiralik" id="SatilikKiralik" autocomplete="off" checked />
+                        <input type="radio" class="btn-check" name="satilikKiralik" id="SatilikKiralik" value="0" autocomplete="off" checked />
                         <label class="btn btn-primary" for="SatilikKiralik">Hepsi</label>
 
-                        <input type="radio" class="btn-check" name="satilikKiralik" id="Kiralık" autocomplete="off" />
+                        <input type="radio" class="btn-check" name="satilikKiralik" id="Kiralık" value="Kiralık" autocomplete="off" />
                         <label class="btn btn-primary" for="Kiralık">Kiralık</label>
                     </div>
                 </div>
 
                 <div class="d-flex flex-column">
-                    <span>İlan tipi</span>
+                    <span>Talep tipi</span>
                     <div class="btn-group">
-                        <input type="radio" class="btn-check" name="ilanTipi" id="TumIlanTipleri" autocomplete="off" checked />
+                        <input type="radio" class="btn-check" name="ilanTipi" id="TumIlanTipleri" value="0" autocomplete="off" checked />
                         <label class="btn btn-primary" for="TumIlanTipleri">Hepsi</label>
 
-                        <input type="radio" class="btn-check" name="ilanTipi" id="Arsa" autocomplete="off" />
+                        <input type="radio" class="btn-check" name="ilanTipi" id="Arsa" value="2" autocomplete="off" />
                         <label class="btn btn-primary" for="Arsa">Arsa</label>
 
-                        <input type="radio" class="btn-check" name="ilanTipi" id="Tarla" autocomplete="off" />
+                        <input type="radio" class="btn-check" name="ilanTipi" id="Tarla" value="4" autocomplete="off" />
                         <label class="btn btn-primary" for="Tarla">Tarla</label>
 
-                        <input type="radio" class="btn-check" name="ilanTipi" id="Daire" autocomplete="off" />
+                        <input type="radio" class="btn-check" name="ilanTipi" id="Daire" value="5" autocomplete="off" />
                         <label class="btn btn-primary" for="Daire">Daire</label>
 
-                        <input type="radio" class="btn-check" name="ilanTipi" id="Dükkan" autocomplete="off" />
+                        <input type="radio" class="btn-check" name="ilanTipi" id="Dükkan" value="1" autocomplete="off" />
                         <label class="btn btn-primary" for="Dükkan">Dükkan</label>
 
-                        <input type="radio" class="btn-check" name="ilanTipi" id="Depo" autocomplete="off" />
+                        <input type="radio" class="btn-check" name="ilanTipi" id="Depo" value="3" autocomplete="off" />
                         <label class="btn btn-primary" for="Depo">Depo</label>
                     </div>
                 </div>
@@ -50,17 +61,17 @@
                 <div class="d-flex flex-column">
                     <span>Sırala</span>
                     <div class="btn-group">
-                        <input type="radio" class="btn-check" name="sirala" id="ilkYeni" autocomplete="off" />
+                        <input type="radio" class="btn-check" name="sirala" id="ilkYeni" value="ilkYeni" autocomplete="off" />
                         <label class="btn btn-primary" for="ilkYeni">Yeniden eskiye</label>
 
-                        <input type="radio" class="btn-check" name="sirala" id="ilkEski" autocomplete="off" />
+                        <input type="radio" class="btn-check" name="sirala" id="ilkEski" value="ilkEski" autocomplete="off" />
                         <label class="btn btn-primary" for="ilkEski">Eskiden yeniye</label>
                     </div>
                 </div>
             </div>
             <div class="d-flex flex-column mx-2 mb-3">
                 <div class="btn-group">
-                    <input class="form-control border-0 w-25" type="search" placeholder="Ara">
+                    <input class="form-control border-0 w-25" type="search" id="search" placeholder="Ara">
                 </div>
             </div>
 
@@ -78,24 +89,15 @@
                                         <tr>
                                             <th scope="col"></th>
                                             <th scope="col">Alıcı İsim soyisim</th>
-                                            <th scope="col">İlan Tipi</th>
+                                            <th scope="col">Talep Başlık</th>
+                                            <th scope="col">Talep Tipi</th>
+                                            <th scope="col">Şehir</th>
                                             <th scope="col">Fiyat aralığı</th>
                                             <th scope="col">Satılık/Kiralık</th>
-                                            <th scope="col">Detaylar</th>
+                                            <th scope="col">Detay</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var talep in Model)
-                                        {
-                                            <tr>
-                                                <td><input name="talepler" class="form-check-input" type="checkbox" value=@talep.Id></td>
-                                                <td>@talep.Alici.AdSoyad</td>
-                                                <td>@talep.IlanTalepTipi.TipAdi</td>
-                                                <td>@talep.MinFiyat - @talep.MaxFiyat TL</td>
-                                                <td>@talep.SatilikMiKiralikMi</td>
-                                                <td><a class="btn btn-sm btn-primary" href="/talepler/detay/@talep.Id">Detay</a></td>
-                                            </tr>
-                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -106,8 +108,15 @@
             </div>
             <div class="d-flex justify-content-end mt-3">
                 <button type="button" class="btn btn-lg btn-danger" onclick="ilanSilModal()">
-                    İlan Sil
+                    Talep Sil
                 </button>
+            </div>
+            <div class="d-flex justify-content-center" id="paginationContainer">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        
+                    </ul>
+                </nav>
             </div>
         </div>
 
@@ -144,131 +153,12 @@
 
 
 
-
-
-
-
-
-
-@*
-
-<div class="container-fluid pt-4 px-4">
-    <div class="bg-secondary rounded p-4">
-
-        <div class="d-flex justify-content-between mx-2 mb-3">
-            <div class="d-flex flex-column">
-                <span>Satılık/Kiralık</span>
-                <div class="btn-group">
-                    <input type="radio" class="btn-check" name="satilikKiralik" id="Satılık" autocomplete="off" />
-                    <label class="btn btn-primary" for="Satılık">Satılık</label>
-
-                    <input type="radio" class="btn-check" name="satilikKiralik" id="SatilikKiralik" autocomplete="off" checked />
-                    <label class="btn btn-primary" for="SatilikKiralik">Hepsi</label>
-
-                    <input type="radio" class="btn-check" name="satilikKiralik" id="Kiralık" autocomplete="off" />
-                    <label class="btn btn-primary" for="Kiralık">Kiralık</label>
-                </div>
-            </div>
-
-            <div class="d-flex flex-column">
-                <span>İlan tipi</span>
-                <div class="btn-group">
-                    <input type="radio" class="btn-check" name="ilanTipi" id="TumIlanTipleri" autocomplete="off" checked />
-                    <label class="btn btn-primary" for="TumIlanTipleri">Hepsi</label>
-
-                    <input type="radio" class="btn-check" name="ilanTipi" id="Arsa" autocomplete="off" />
-                    <label class="btn btn-primary" for="Arsa">Arsa</label>
-
-                    <input type="radio" class="btn-check" name="ilanTipi" id="Tarla" autocomplete="off" />
-                    <label class="btn btn-primary" for="Tarla">Tarla</label>
-
-                    <input type="radio" class="btn-check" name="ilanTipi" id="Daire" autocomplete="off" />
-                    <label class="btn btn-primary" for="Daire">Daire</label>
-
-                    <input type="radio" class="btn-check" name="ilanTipi" id="Dükkan" autocomplete="off" />
-                    <label class="btn btn-primary" for="Dükkan">Dükkan</label>
-
-                    <input type="radio" class="btn-check" name="ilanTipi" id="Depo" autocomplete="off" />
-                    <label class="btn btn-primary" for="Depo">Depo</label>
-                </div>
-            </div>
-            
-            <div class="d-flex flex-column">
-                <span>Sırala</span>
-                <div class="btn-group">
-                    <input type="radio" class="btn-check" name="sirala" id="ilkYeni" autocomplete="off" />
-                    <label class="btn btn-primary" for="ilkYeni">Yeniden eskiye</label>
-
-                    <input type="radio" class="btn-check" name="sirala" id="ilkEski" autocomplete="off" />
-                    <label class="btn btn-primary" for="ilkEski">Eskiden yeniye</label>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex flex-column mx-2 mb-3">
-            <span>Ara</span>
-            <div class="btn-group">
-                <input class="form-control border-0 w-25" type="search" placeholder="Ara">
-            </div>
-        </div>
-
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Talepler</h6>
-            <a href="talepler/talepekle" class="btn btn-success" style="color:#ffffff"><i class="fa-solid fa-plus"></i> Yeni talep</a>
-        </div>
-        <div class="table-responsive">
-            <table class="table text-start align-middle table-bordered table-hover mb-0">
-                <thead>
-                    <tr class="text-white">
-                        <th scope="col"></th>
-                        <th scope="col">Alıcı İsim soyisim</th>
-                        <th scope="col">İlan Tipi</th>
-                        <th scope="col">Fiyat aralığı</th>
-                        <th scope="col">Satılık/Kiralık</th>
-                        @*<th scope="col">Lokasyon</th>
-                        <th scope="col">Detaylar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var talep in Model)
-                    {
-                        <tr>
-                            <td><input name="talepler" class="form-check-input" type="checkbox" value=@talep.Id></td>
-                            <td>@talep.Alici.AdSoyad</td>
-                            <td>@talep.IlanTalepTipi.TipAdi</td>
-                            <td>@talep.MinFiyat - @talep.MaxFiyat TL</td>
-                            <td>@talep.SatilikMiKiralikMi</td>
-                           @* <td>@ilan.Mahalle, @ilan.Semt, @ilan.Sehir</td>
-                            <td><a class="btn btn-sm btn-primary" href="/talepler/detay/@talep.Id">Detay</a></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <div class="d-flex justify-content-end mt-3">
-            <button type="button" class="btn btn-lg btn-danger" onclick="ilanSilModal()">
-                Talep Sil
-            </button>
-        </div>
-    </div>
-    
-</div>
-
-<div class="modal" tabindex="-1" role="dialog" id="ilanSilModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <p style="color:#ffffff">Seçtiğiniz talepler silinsin mi?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="ilanSil()">Sil</button>
-                <button type="button" class="btn btn-outline-secondary" onclick="closeModal()">Vazgeç</button>
-            </div>
-        </div>
-    </div>
-</div>*@
 <!-- Recent Sales End -->
 
 <script>
+
+    var userId="@Html.Raw((string)ViewBag.UserId)";
+
     $("#navTalep").addClass("active");
 
     function ilanSilModal() {
@@ -293,4 +183,122 @@
             }
         });
     }
+
+    $("input:radio[name='satilikKiralik']").change(() => {
+        getByFilters(userId);
+    });
+
+    $("input:radio[name='ilanTipi']").change(() => {
+        getByFilters(userId);
+    });
+
+    $("input:radio[name='sirala']").change(() => {
+        getByFilters(userId);
+    });
+
+    $("#search").keyup(() => {
+        if ($("#search").val().length > 2 || $("#search").val().length == 0) {
+            getByFilters(userId);
+        }
+    });
+
+    var talepler;
+    function getByFilters(userId) {
+        let satilikKiralik = $("input:radio[name='satilikKiralik']:checked").val();
+        let ilanTipi = $("input:radio[name='ilanTipi']:checked").val();
+        let sirala = $("input:radio[name='sirala']:checked").val();
+        let search = $("#search").val();
+
+        $("tbody").html('<div class="show d-flex align-items-center justify-content-center w-100"><div class="spinner-border text-primary text-center" style = "width: 3rem; height: 3rem;" role = "status"><span class="sr-only" > Loading...</span></div></div>');
+        $.get("https://localhost:7191/talepler/getByFilters", {
+            userId:userId,
+            satilikKiralik: satilikKiralik,
+            ilanTipi: ilanTipi,
+            sirala: sirala,
+            search: search
+        }, (data, status) => {
+            if (status == "success") {
+                talepler = JSON.parse(data);
+                //GetTalepler(talepler);
+
+                let count = talepler.length;
+                let pageCount = count / 20;
+                let netPageCount = Math.floor(pageCount);
+                if (pageCount - netPageCount > 0) {
+                    netPageCount++;
+                }
+                showPageContainer(netPageCount);
+
+                showTalepler(1);
+            }
+        }
+        ).fail(function (xhr, status) {
+            $("tbody").html(`<div class='alert-danger text-center'>Bir hata oluştu. Hata: ${xhr} - ${status}</div>`);
+        });
+    }
+
+    function GetTalepler(talepler) {
+        let html = "";
+        talepler.forEach(talep => {
+            html += `
+                             <tr>
+                                 <td><input name="ilanlar" class="form-check-input" type="checkbox" value=${talep.Id}></td>
+                                 <td>${talep.Alici.AdSoyad}</td>
+                                 <td>${talep.TalepBaslik}</td>
+                                 <td>${talep.IlanTalepTipi.TipAdi}</td>
+                                 <td>${talep.Sehir}</td>
+                                 <td>${talep.MinFiyat} TL - ${talep.MaxFiyat} TL</td>
+                                 <td>${talep.SatilikMiKiralikMi}</td>
+                                 <td><a class="btn btn-sm btn-primary" href="/detay/${talep.Id}">Detay</a></td>
+
+                             </tr>
+                                        `
+        });
+
+        $("tbody").html(html);
+    }
+
+    function showPageContainer(netPageCount) {
+        let html = "";
+        for (i = 1; i <= netPageCount; i++) {
+            html += `
+                         <li class="page-item"><button type="button" onclick="showTalepler(${i})" class="page-link">${i}</button></li>
+                    `
+        }
+
+        $("#paginationContainer").html(html);
+    }
+
+    function showTalepler(pageNumber) {
+        let startIndex = (pageNumber - 1) * 20;
+        let finishIndex = pageNumber * 20;
+        let html = "";
+        if(talepler.length == 0){
+            $("tbody").html(`<div class='alert-warning text-center'>Talep bulunamadı.</div>`);
+        }
+        for (i = startIndex; i < finishIndex; i++) {
+            if (talepler[i] != null || talepler[i] != undefined) {
+                html += `
+                         <tr>
+                                     <td><input name="ilanlar" class="form-check-input" type="checkbox" value=${talepler[i].Id}></td>
+                                     <td>${talepler[i].Alici.AdSoyad}</td>
+                                 <td>${talepler[i].TalepBaslik}</td>
+                                     <td>${talepler[i].IlanTalepTipi.TipAdi}</td>
+                                 <td>${talepler[i].Sehir}</td>
+                                         <td>${talepler[i].MinFiyat} TL - ${talepler[i].MaxFiyat} TL</td>
+                                 <td>${talepler[i].SatilikMiKiralikMi}</td>
+                                 <td><a class="btn btn-sm btn-primary" href="talepler/detay/${talepler[i].Id}">Detay</a></td>
+
+                             </tr>
+                      `
+                $("tbody").html(html);
+            }
+            else {
+                break;
+            }
+        };
+
+    }
+
+    getByFilters(userId);
 </script>

@@ -1,0 +1,23 @@
+﻿@model List<Talep>
+
+@foreach (var talep in Model)
+{
+    <div class="card mb-2 ml-4">
+        <div class="card-header">
+            @talep.TalepBaslik (@talep.IlanTalepTipi.TipAdi)
+        </div>
+        <div class="card-body">
+            <h5><b>Talep Başlık:</b> @talep.TalepBaslik</h5>
+            <p><b>Alıcı Ad Soyad:</b> @talep.Alici.AdSoyad</p>
+            <p><b>Talep Tipi:</b> @talep.IlanTalepTipi.TipAdi</p>
+            <p><b>Satılık-Kiralık:</b> @talep.SatilikMiKiralikMi</p>
+            <p><b>Şehir:</b> @talep.Sehir</p>
+            <p><b>Fiyat Aralığı:</b> @talep.MinFiyat  TL - @talep.MaxFiyat TL</p>
+            <p><b>Kayıt Tarihi:</b> @talep.KayitTarihi.Day/@talep.KayitTarihi.Month/@talep.KayitTarihi.Year</p>
+            <a href="https://localhost:7191/talepler/detay/@talep.Id" class="btn btn-primary">Talebi görüntüle</a>
+
+            <a class="btn btn-success" href="https://api.whatsapp.com/send?phone=@talep.Alici.TelefonNo" target="_blank"><i class="fa-brands fa-whatsapp"></i> Alıcı ile iletişime geç</a>
+
+        </div>
+    </div>
+}

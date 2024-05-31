@@ -21,9 +21,20 @@ namespace DataAccessLayer.Concrete
             return await EntityOfUser(userId).ToListAsync();
         }
 
-        public IEnumerable<Danisan> GetRange(IEnumerable<string> Ids)
+        public IEnumerable<Danisan> GetRange(string userId, IEnumerable<string> Ids)
         {
-            return Entity.Where(danisan => Ids.Contains(danisan.Id)).ToList();
+            return EntityOfUser(userId).Where(danisan => Ids.Contains(danisan.Id)).ToList();
         }
+
+        public IEnumerable<Danisan> SearchDanisan(string userId, string search)
+        {
+            if(search == null)
+            {
+                return EntityOfUser(userId).ToList();
+            }
+            return EntityOfUser(userId).Where(danisan => danisan.AdSoyad.Contains(search) || danisan.TelefonNo.Contains(search)).ToList();
+        }
+
+
     }
 }

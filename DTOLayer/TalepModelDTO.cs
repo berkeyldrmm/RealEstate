@@ -9,6 +9,7 @@ namespace DTOLayer
     public class TalepModelDTO
     {
         public string RadioForAlici { get; set; }
+        public string TalepBaslik { get; set; }
         public string? AliciId { get; set; } = string.Empty;
         public string? AliciIsimSoyisim { get; set; } = string.Empty;
         public string? AliciMail { get; set; } = string.Empty;

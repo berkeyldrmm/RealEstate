@@ -15,8 +15,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.DependenciesContainer();
-//builder.Services.AddDbContext<RealEstateDBContext>();
-builder.Services.AddDbContext<RealEstateDBContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:SqlServer"]));
+builder.Services.AddDbContext<RealEstateDBContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:SqlServer"],
+                sqlServerOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 10,
+                            maxRetryDelay: TimeSpan.FromSeconds(5),
+                            errorNumbersToAdd: null
+                       );
+                }));
 builder.Services.AddMvc();
 builder.Services.AddFluentValidation().AddValidatorsFromAssemblyContaining<LoginValidation>();
 

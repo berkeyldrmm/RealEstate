@@ -1,0 +1,27 @@
+﻿@model List<Ilan>
+
+@foreach(var ilan in Model){
+    <div class="card mb-2 ml-4">
+        <div class="card-header">
+            @ilan.IlanBaslik (@ilan.IlanTalepTipi.TipAdi)
+        </div>
+        <div class="card-body">
+            <h5><b>Talep Başlık:</b> @ilan.IlanBaslik</h5>
+            <p><b>Satıcı Ad Soyad:</b> @ilan.Satici.AdSoyad</p>
+            <p><b>Talep Tipi:</b> @ilan.IlanTalepTipi.TipAdi</p>
+            <p><b>Satılık-Kiralık:</b> @ilan.SatilikMiKiralikMi</p>
+            <p><b>Semt/Şehir:</b> @ilan.Semt/@ilan.Sehir</p>
+            <p><b>Fiyat Aralığı:</b> @ilan.PortfoyFiyati TL</p>
+            <p><b>Kayıt Tarihi:</b> @ilan.KayitTarihi.Day/@ilan.KayitTarihi.Month/@ilan.KayitTarihi.Year</p>
+            @if (ilan.IlanTalepTipiId == 1)
+            {
+                <p class="card-text"><b>Oda Sayısı:</b> @ilan.Dukkan.OdaSayisi</p>
+            }
+            @if (ilan.IlanTalepTipiId == 5)
+            {
+                <p class="card-text"><b>Oda Sayısı:</b> @ilan.Daire.OdaSayisi</p>
+            }
+            <a href="https://localhost:7191/ilanlar/detay/@ilan.Id" class="btn btn-primary">İlanı görüntüle</a>
+        </div>
+    </div>
+}

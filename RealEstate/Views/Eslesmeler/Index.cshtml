@@ -1,0 +1,43 @@
+﻿@model List<(Talep talep, Ilan ilan)>
+
+<div class="container-fluid pt-4 px-4">
+    <h2>Mevcut Eşleşmeler</h2>
+    @foreach (var ilanTalepPair in Model)
+    {
+        <div class="card mb-2 ml-4">
+            <div class="card-header">
+                @ilanTalepPair.talep.TalepBaslik <i class="fa fa-arrow-right"></i> @ilanTalepPair.ilan.IlanBaslik
+            </div>
+            <div class="card-body d-grid">
+                <div class="row">
+                    <div class="col-4">
+                        <h5><b>Talep Başlık:</b> @ilanTalepPair.talep.TalepBaslik</h5>
+                        <p><b>Alıcı Ad Soyad:</b> @ilanTalepPair.talep.Alici.AdSoyad</p>
+                        <p><b>Talep Tipi:</b> @ilanTalepPair.talep.IlanTalepTipi.TipAdi</p>
+                        <p><b>Satılık-Kiralık:</b> @ilanTalepPair.talep.SatilikMiKiralikMi</p>
+                        <p><b>Şehir:</b> @ilanTalepPair.talep.Sehir</p>
+                        <p><b>Fiyat Aralığı:</b> @ilanTalepPair.talep.MinFiyat  TL - @ilanTalepPair.talep.MaxFiyat TL</p>
+                        <p><b>Kayıt Tarihi:</b> @ilanTalepPair.talep.KayitTarihi.Day/@ilanTalepPair.talep.KayitTarihi.Month/@ilanTalepPair.talep.KayitTarihi.Year</p>
+                        <a href="https://localhost:7191/talepler/detay/@ilanTalepPair.talep.Id" class="btn btn-primary">Talebi görüntüle</a>
+                    </div>
+                    <div class="col-4 d-flex justify-content-center align-items-center">
+                        <i class="fa fa-arrow-right" style="font-size:25px;"></i>
+                    </div>
+                    <div class="col-4">
+                        <h5><b>İlan Başlık:</b> @ilanTalepPair.ilan.IlanBaslik</h5>
+                        <p><b>Satıcı Ad Soyad:</b> @ilanTalepPair.ilan.Satici.AdSoyad</p>
+                        <p><b>İlan Tipi:</b> @ilanTalepPair.ilan.IlanTalepTipi.TipAdi</p>
+                        <p><b>Satılık-Kiralık:</b> @ilanTalepPair.ilan.SatilikMiKiralikMi</p>
+                        <p><b>Semt/Şehir:</b> @ilanTalepPair.ilan.Semt/@ilanTalepPair.ilan.Sehir</p>
+                        <p><b>Fiyat:</b> @ilanTalepPair.ilan.PortfoyFiyati TL</p>
+                        <p><b>Kayıt Tarihi:</b> @ilanTalepPair.ilan.KayitTarihi.Day/@ilanTalepPair.ilan.KayitTarihi.Month/@ilanTalepPair.ilan.KayitTarihi.Year</p>
+                        <a href="https://localhost:7191/ilanlar/detay/@ilanTalepPair.ilan.Id" class="btn btn-primary">İlanı görüntüle</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $("#navEslesmeler").addClass("active");
+</script>

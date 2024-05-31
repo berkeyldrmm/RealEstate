@@ -28,13 +28,15 @@ public partial class RealEstateDBContext : IdentityDbContext<User, Role, string>
 
     public virtual DbSet<Tarla> Tarlalar { get; set; }
 
-    public RealEstateDBContext(DbContextOptions options) : base(options)
+    public RealEstateDBContext(DbContextOptions<RealEstateDBContext> options) : base(options)
     {
 
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=BERKE;Database=RealEstateDB;Trusted_Connection=True;TrustServerCertificate=True;");
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    optionsBuilder.UseSqlServer("Server=BERKE;Database=RealEstateDB;Trusted_Connection=True;TrustServerCertificate=True;");
+    //}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -50,6 +52,10 @@ public partial class RealEstateDBContext : IdentityDbContext<User, Role, string>
             entity.Property(e => e.MetrekareFiyat).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.PaftaNo).HasColumnName("PaftaNo.");
             entity.Property(e => e.ParselNo).HasColumnName("ParselNo.");
+
+            entity.HasOne(i => i.Ilan)
+            .WithOne(a => a.Arsa)
+            .HasForeignKey<Arsa>(a => a.Id);
 
         });
 

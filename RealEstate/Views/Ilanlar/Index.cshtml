@@ -1,8 +1,22 @@
-﻿@model IEnumerable<Ilan>
-
-<link rel="stylesheet" href="~/css/table.css"/>
+﻿<link rel="stylesheet" href="~/css/table.css"/>
 
 <div class="container-fluid pt-4 px-4">
+        @if (TempData["successIlanKayit"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["successIlanKayit"]
+            </div>
+
+            <script>
+
+                $(".alert").fadeIn(2000, () => {
+                    setTimeout(() => {
+                        $(".alert").fadeOut();
+                    }, 2000)
+                });
+
+            </script>
+        }
     <form asp-controller="ilanlar" asp-action="ilanSil" method="post">
         <div class="bg-secondary rounded p-4">
             <div class="d-flex justify-content-between mx-2 mb-3">
@@ -67,16 +81,16 @@
                 <div class="d-flex flex-column">
                     <span>Sırala</span>
                     <div class="btn-group">
-                        <input type="radio" class="btn-check" name="sirala" id="artanFiyat" value="artanFiyat" autocomplete="off" />
+                        <input type="radio" class="btn-check"  name="sirala" id="artanFiyat" value="artanFiyat" autocomplete="off" />
                         <label class="btn btn-primary" for="artanFiyat">Fiyata göre (Artan)</label>
 
-                        <input type="radio" class="btn-check" name="sirala" id="azalanFiyat" value="azalanFiyat" autocomplete="off" />
+                        <input type="radio" class="btn-check"  name="sirala" id="azalanFiyat" value="azalanFiyat" autocomplete="off" />
                         <label class="btn btn-primary" for="azalanFiyat">Fiyata göre (Azalan)</label>
 
-                        <input type="radio" class="btn-check" name="sirala" id="ilkYeni" value="ilkYeni" autocomplete="off" />
+                        <input type="radio" class="btn-check"  name="sirala" id="ilkYeni" value="ilkYeni" autocomplete="off" />
                         <label class="btn btn-primary" for="ilkYeni">Yeniden eskiye</label>
                     
-                        <input type="radio" class="btn-check" name="sirala" id="ilkEski" value="ilkEski" autocomplete="off" />
+                        <input type="radio" class="btn-check"  name="sirala" id="ilkEski" value="ilkEski" autocomplete="off" />
                         <label class="btn btn-primary" for="ilkEski">Eskiden yeniye</label>
                     </div>
                 </div>
@@ -114,36 +128,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var ilan in Model)
-                                        {
-                                            <tr @(ilan.SatisDurumu ? "style=background-color:#95d5b2;" : "")>
-                                                <td><input name="ilanlar" class="form-check-input" type="checkbox" value=@ilan.Id></td>
-                                                <td>@ilan.IlanBaslik</td>
-                                                <td>@ilan.Satici.AdSoyad</td>
-                                                <td>@ilan.IlanTalepTipi.TipAdi</td>
-                                                <td>@ilan.PortfoyFiyati</td>
-                                                <td>@ilan.Komisyon</td>
-                                                <td>@ilan.SatilikMiKiralikMi</td>
-                                                <td>@ilan.Kazanc</td>
-                                                <td>@ilan.Mahalle, @ilan.Semt, @ilan.Sehir</td>
-                                                <td><a class="btn btn-sm btn-primary" href="ilanlar/detay/@ilan.Id">Detay</a></td>
-                                                <td>
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        @if (!ilan.SatisDurumu)
-                                                        {
-                                                            <div>Alıcı bekliyor</div>
-
-                                                            <button type="button" style="height:fit-content;" class='btn btn-danger' onclick="ilanSatModal('@ilan.Id')">Sat</button>
-                                                        }
-                                                        else
-                                                        {
-                                                            <div>Satıldı/Kiralandı</div>
-                                                        }
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -156,6 +140,13 @@
                 <button type="button" class="btn btn-lg btn-danger" onclick="ilanSilModal()">
                     İlan Sil
                 </button>
+            </div>
+            <div class="d-flex justify-content-center" id="paginationContainer">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                       
+                    </ul>
+                </nav>
             </div>
         </div>
 
@@ -210,6 +201,9 @@
 <!-- Recent Sales End -->
 
 <script>
+
+    var userId="@Html.Raw((string)ViewBag.UserId)";
+    console.log(userId);
     $("#navIlan").addClass("active");
 
     function ilanSilModal() {
@@ -220,77 +214,78 @@
     }
 
     $("input:radio[name='satilikKiralik']").change(() => {
-        getByFilters();
+        getByFilters(userId);
     });
 
     $("input:radio[name='ilanTipi']").change(() => {
-        getByFilters();
+        getByFilters(userId);
     });
 
     $("input:radio[name='satisDurumu']").change(() => {
-        getByFilters();
+        getByFilters(userId);
     });
 
     $("input:radio[name='sirala']").change(() => {
-        getByFilters();
+        getByFilters(userId);
     });
 
     $("#search").keyup(() => {
-        if ($("#search").val().length > 3 || $("#search").val().length == 0) {
-            getByFilters();
+        if ($("#search").val().length > 2 || $("#search").val().length == 0) {
+            getByFilters(userId);
         }
     });
 
     $("#minFiyat").keyup(() => {
-        if ($("#minFiyat").val().length > 3 || $("#minFiyat").val().length == 0) {
+        if ($("#minFiyat").val().length > 2 || $("#minFiyat").val().length == 0) {
             console.log($("#minFiyat").val());
-            getByFilters();
+            getByFilters(userId);
         }
     });
 
     $("#maxFiyat").keyup(() => {
-        if($("#minFiyat").val().length>3 || $("#minFiyat").val().length == 0){
+        if ($("#minFiyat").val().length > 2 || $("#minFiyat").val().length == 0) {
             console.log($("#minFiyat").val());
-            getByFilters();
+            getByFilters(userId);
         }
     });
 
-    function ilanSil(){
-        var ilanIds=[];
+    function ilanSil() {
+        var ilanIds = [];
         var ilanlar = $("input[name='ilanlar']");
-        ilanlar.each((index,value)=>{
+        ilanlar.each((index, value) => {
             if (value.checked) {
                 ilanIds.push(value.value);
             }
         });
 
-        $.post("https://localhost:7191/ilanlar/ilansil", { idsJson:JSON.stringify(ilanIds)}, (data,status) => {
-            if(status="success"){
+        $.post("https://localhost:7191/ilanlar/ilansil", { idsJson: JSON.stringify(ilanIds) }, (data, status) => {
+            if (status = "success") {
                 location.reload()
             }
         });
     }
 
     function ilanSatModal(id) {
-        console.log(id);
         $("#ilanSatModal").css("display", "flex");
         $("#ilanSatModal").css("align-items", "center");
         $("#ilanSatModal").css("justify-content", "center");
 
         $("#kazanc-footer").html(`<button type="button" class="btn btn-danger" onclick="ilanSat('${id}')">Satıldı</button>
-            <button type="button" class="btn btn-outline-secondary" onclick="closeModal()">Vazgeç</button>`)
+                <button type="button" class="btn btn-outline-secondary" onclick="closeModal()">Vazgeç</button>`)
     }
 
     function ilanSat(id) {
         console.log(id);
-        $.post("https://localhost:7191/ilanlar/ilansat/"+id+"?kazanc="+$("#kazanc").val(), (data,status) => {
-            if(status="success"){
+        $.post("https://localhost:7191/ilanlar/ilansat/" + id + "?kazanc=" + $("#kazanc").val(), (data, status) => {
+            if (status = "success") {
                 location.reload()
             }
         });
     }
 
-    function getByFilters() {
+    var ilanlar;
+
+    function getByFilters(userId) {
         let satilikKiralik = $("input:radio[name='satilikKiralik']:checked").val();
         let ilanTipi = $("input:radio[name='ilanTipi']:checked").val();
         let satisDurumu = $("input:radio[name='satisDurumu']:checked").val();
@@ -301,6 +296,7 @@
 
         $("tbody").html('<div class="show d-flex align-items-center justify-content-center w-100"><div class="spinner-border text-primary text-center" style = "width: 3rem; height: 3rem;" role = "status"><span class="sr-only" > Loading...</span></div></div>');
         $.get("https://localhost:7191/ilanlar/getByFilters", {
+            userId: userId,
             satilikKiralik: satilikKiralik,
             ilanTipi: ilanTipi,
             satisDurumu: satisDurumu,
@@ -310,36 +306,75 @@
             search: search
         }, (data, status) => {
             if (status == "success") {
-                let html = "";
-                let ilanlar = JSON.parse(data);
-                ilanlar.forEach(ilan => {
-                    html += `
-                                    <tr ${ilan.SatisDurumu ? "style=background-color:#95d5b2;" : ""}>
-                                                            <td><input name="ilanlar" class="form-check-input" type="checkbox" value=${ilan.Id}></td>
-                                                            <td>${ilan.IlanBaslik}</td>
-                                                            <td>${ilan.Satici.AdSoyad}</td>
-                                                            <td>${ilan.IlanTalepTipi.TipAdi}</td>
-                                                            <td>${ilan.PortfoyFiyati}</td>
-                                                            <td>${ilan.Komisyon}</td>
-                                                            <td>${ilan.SatilikMiKiralikMi}</td>
-                                                            <td>${ilan.Kazanc}</td>
-                                                            <td>${ilan.Mahalle}, ${ilan.Semt}, ${ilan.Sehir}</td>
-                                                            <td><a class="btn btn-sm btn-primary" href="ilanlar/detay/${ilan.Id}">Detay</a></td>
-                                                            <td>
-                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                    ${ilan.SatisDurumu ? '<div>Satıldı/Kiralandı</div>' : '<div>Alıcı bekliyor</div><button type="button" style="height:fit-content;" class="btn btn-danger" onclick="ilanSatModal(${ilan.Id})">Sat</button>'}
-                                                                </div>
-                                                            </td>
+                ilanlar = JSON.parse(data);
 
-                                                        </tr>
-                                `
-                });
+                let count = ilanlar.length;
+                let pageCount = count / 20;
+                let netPageCount = Math.floor(pageCount);
+                if (pageCount - netPageCount > 0) {
+                    netPageCount++;
+                }
+                showPageContainer(netPageCount);
 
-                $("tbody").html(html);
+                showIlanlar(1);
             }
         }
         ).fail(function (xhr, status) {
             $("tbody").html(`<div class='alert-danger text-center'>Bir hata oluştu. Hata: ${xhr} - ${status}</div>`);
         });
+
+
     }
+
+    function showPageContainer(netPageCount) {
+        let html = "";
+        for (i = 1; i <= netPageCount; i++) {
+            html += `
+                     <li class="page-item"><button type="button" onclick="showIlanlar(${i})" class="page-link">${i}</button></li>
+                `
+        }
+
+        $("#paginationContainer").html(html);
+    }
+
+    function showIlanlar(pageNumber) {
+        let startIndex = (pageNumber - 1) * 20;
+        let finishIndex = pageNumber * 20;
+        let html="";
+        if(ilanlar.length == 0){
+            $("tbody").html(`<div class='alert-warning text-center'>İlan bulunamadı.</div>`);
+        }
+        for (i = startIndex; i < finishIndex; i++) {
+            if (ilanlar[i] != null || ilanlar[i] != undefined) {
+                html += `
+                                                <tr ${ilanlar[i].SatisDurumu ? "style=background-color:#95d5b2;" : ""}>
+                                                                        <td><input name="ilanlar" class="form-check-input" type="checkbox" value=${ilanlar[i].Id}></td>
+                                                                        <td>${ilanlar[i].IlanBaslik}</td>
+                                                                        <td>${ilanlar[i].Satici.AdSoyad}</td>
+                                                                        <td>${ilanlar[i].IlanTalepTipi.TipAdi}</td>
+                                                                        <td>${ilanlar[i].PortfoyFiyati}</td>
+                                                                        <td>${ilanlar[i].Komisyon}</td>
+                                                                        <td>${ilanlar[i].SatilikMiKiralikMi}</td>
+                                                                        <td>${ilanlar[i].Kazanc}</td>
+                                                                        <td>${ilanlar[i].Mahalle}, ${ilanlar[i].Semt}, ${ilanlar[i].Sehir}</td>
+                                                                        <td><a class="btn btn-sm btn-primary" href="ilanlar/detay/${ilanlar[i].Id}">Detay</a></td>
+                                                                        <td>
+                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                ${ilanlar[i].SatisDurumu ? '<div>Satıldı/Kiralandı</div>' : `<div>Alıcı bekliyor</div><button type="button" style="height:fit-content;" class="btn btn-danger" onclick="ilanSatModal('${ilanlar[i].Id}')">Sat</button>`}
+                                                                            </div>
+                                                                        </td>
+
+                                                                    </tr>
+                                            `
+                $("tbody").html(html);
+            }
+            else {
+                break;
+            }
+        };
+
+    }
+
+    getByFilters(userId);
+
 </script>

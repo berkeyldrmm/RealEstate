@@ -25,9 +25,9 @@ namespace BusinessLayer.Concrete
             return _danisanRepository.Delete(item);
         }
 
-        public void DeleteRange(IEnumerable<string> Ids)
+        public void DeleteRange(string userId, IEnumerable<string> Ids)
         {
-            var items = _danisanRepository.GetRange(Ids);
+            var items = _danisanRepository.GetRange(userId, Ids);
             _danisanRepository.DeleteRange(items);
         }
 
@@ -49,6 +49,11 @@ namespace BusinessLayer.Concrete
         public async Task<bool> Insert(Danisan item)
         {
             return await _danisanRepository.Insert(item);
+        }
+
+        public IEnumerable<Danisan> SearchDanisan(string userId, string search)
+        {
+            return _danisanRepository.SearchDanisan(userId, search);
         }
 
         public Task<bool> Update(Danisan item)

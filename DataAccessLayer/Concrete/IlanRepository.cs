@@ -57,31 +57,31 @@ namespace DataAccessLayer.Concrete
             return result;
         }
 
-        public object GetCountsOfIlanlar()
+        public object GetCountsOfIlanlar(string userId)
         {
             return new
             {
-                CountOfArsa = Entity.Where(i => i.IlanTalepTipiId == 2).Count(),
-                CountOfTarla = Entity.Where(i => i.IlanTalepTipiId == 4).Count(),
-                CountOfDukkan = Entity.Where(i => i.IlanTalepTipiId == 1).Count(),
-                CountOfDepo = Entity.Where(i => i.IlanTalepTipiId == 3).Count(),
-                CountOfDaire = Entity.Where(i => i.IlanTalepTipiId == 5).Count()
+                CountOfArsa = EntityOfUser(userId).Where(i => i.IlanTalepTipiId == 2).Count(),
+                CountOfTarla = EntityOfUser(userId).Where(i => i.IlanTalepTipiId == 4).Count(),
+                CountOfDukkan = EntityOfUser(userId).Where(i => i.IlanTalepTipiId == 1).Count(),
+                CountOfDepo = EntityOfUser(userId).Where(i => i.IlanTalepTipiId == 3).Count(),
+                CountOfDaire = EntityOfUser(userId).Where(i => i.IlanTalepTipiId == 5).Count()
             };
             
         }
 
-        public object GetSatilikKiralik()
+        public object GetSatilikKiralik(string userId)
         {
             return new
             {
-                Satilik = Entity.Where(i => i.SatilikMiKiralikMi == "Satılık").Count(),
-                Kiralik = Entity.Where(i => i.SatilikMiKiralikMi == "Kiralık").Count()
+                Satilik = EntityOfUser(userId).Where(i => i.SatilikMiKiralikMi == "Satılık").Count(),
+                Kiralik = EntityOfUser(userId).Where(i => i.SatilikMiKiralikMi == "Kiralık").Count()
             };
         }
 
-        public async Task<IEnumerable<Ilan>> GetByFilters(List<Expression<Func<Ilan, bool>>> expressions, string sirala)
+        public async Task<IEnumerable<Ilan>> GetByFilters(string userId, List<Expression<Func<Ilan, bool>>> expressions, string sirala)
         {
-            IQueryable<Ilan> query = Entity.Include(i => i.Satici).Include(i => i.IlanTalepTipi);
+            IQueryable<Ilan> query = EntityOfUser(userId).Include(i => i.Satici).Include(i => i.IlanTalepTipi);
 
             foreach (var expression in expressions)
             {
@@ -109,6 +109,29 @@ namespace DataAccessLayer.Concrete
             }
 
             return await query.ToListAsync();
+        }
+
+        public async Task<List<Ilan>> GetIlansForTalep(string userId, List<Expression<Func<Ilan, bool>>> expressions)
+        {
+            IQueryable<Ilan> query = EntityOfUser(userId).Include(i => i.Satici).Include(i => i.Dukkan).Include(i => i.Daire).Include(i => i.IlanTalepTipi);
+            
+            foreach (var expression in expressions)
+            {
+                query = query.Where(expression);
+            }
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<List<(string ilanBaslik, decimal kazanc)>> GetKazancsOfMonth(string userId)
+        {
+            var kazancsOfMonth = await EntityOfUser(userId).Where(i => i.KayitTarihi.Month == DateTime.Now.Month && i.KayitTarihi.Year == DateTime.Now.Year).Where(i => i.SatisDurumu).Select(i => new {i.IlanBaslik, i.Kazanc}).ToListAsync();
+            List<(string ilanBaslik, decimal kazanc)> kazancsOfMonthTuple = new List<(string ilanBaslik, decimal kazanc)>();
+            foreach (var kazanc in kazancsOfMonth)
+            {
+                kazancsOfMonthTuple.Add((kazanc.IlanBaslik, kazanc.Kazanc));
+            }
+            return kazancsOfMonthTuple;
         }
     }
 }
