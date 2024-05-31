@@ -237,26 +237,26 @@
         });
     }
 
-    function GetTalepler(talepler) {
-        let html = "";
-        talepler.forEach(talep => {
-            html += `
-                             <tr>
-                                 <td><input name="ilanlar" class="form-check-input" type="checkbox" value=${talep.Id}></td>
-                                 <td>${talep.Alici.AdSoyad}</td>
-                                 <td>${talep.TalepBaslik}</td>
-                                 <td>${talep.IlanTalepTipi.TipAdi}</td>
-                                 <td>${talep.Sehir}</td>
-                                 <td>${talep.MinFiyat} TL - ${talep.MaxFiyat} TL</td>
-                                 <td>${talep.SatilikMiKiralikMi}</td>
-                                 <td><a class="btn btn-sm btn-primary" href="/detay/${talep.Id}">Detay</a></td>
+    //function GetTalepler(talepler) {
+    //    let html = "";
+    //    talepler.forEach(talep => {
+    //        html += `
+    //                         <tr>
+    //                             <td><input name="ilanlar" class="form-check-input" type="checkbox" value=${talep.Id}></td>
+    //                             <td>${talep.Alici.AdSoyad}</td>
+    //                             <td>${talep.TalepBaslik}</td>
+    //                             <td>${talep.IlanTalepTipi.TipAdi}</td>
+    //                             <td>${talep.Sehir}</td>
+    //                             <td>${talep.MinFiyat} TL - ${talep.MaxFiyat} TL</td>
+    //                             <td>${talep.SatilikMiKiralikMi}</td>
+    //                             <td><a class="btn btn-sm btn-primary" href="/detay/${talep.Id}">Detay</a></td>
 
-                             </tr>
-                                        `
-        });
+    //                         </tr>
+    //                                    `
+    //    });
 
-        $("tbody").html(html);
-    }
+    //    $("tbody").html(html);
+    //}
 
     function showPageContainer(netPageCount) {
         let html = "";
@@ -287,7 +287,7 @@
                                  <td>${talepler[i].Sehir}</td>
                                          <td>${talepler[i].MinFiyat} TL - ${talepler[i].MaxFiyat} TL</td>
                                  <td>${talepler[i].SatilikMiKiralikMi}</td>
-                                 <td><a class="btn btn-sm btn-primary" href="talepler/detay/${talepler[i].Id}">Detay</a></td>
+                                 <td><a class="btn btn-sm btn-primary" href="detay/${talepler[i].Id}">Detay</a></td>
 
                              </tr>
                       `
