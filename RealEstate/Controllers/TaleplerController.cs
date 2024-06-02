@@ -24,38 +24,23 @@ namespace RealEstate.Controllers
             _ilanService = ilanService;
             _aliciService = aliciService;
             _unitOfWork = unitOfWork;
-            //_talepService._userId = _user.Id;
         }
 
         public IActionResult Index()
         {
-            ViewBag.UserId = _user.Id;
             return View();
         }
 
-        //public async Task<string> GetTalepler()
-        //{
-        //    var talepler = await _talepService.GetAllWithAlici(_user.Id);
-        //    var result = JsonConvert.SerializeObject(talepler, Formatting.Indented,
-        //        new JsonSerializerSettings
-        //        {
-        //            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        //        });
-
-        //    return result;
-        //}
-
         public IActionResult TalepEkle()
         {
-            ViewBag.userId = _user.Id;
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> TalepSil(string userId, string idsJson)
+        public async Task<IActionResult> TalepSil(string idsJson)
         {
             var taleplerIds = JsonConvert.DeserializeObject<List<string>>(idsJson);
-            _talepService.DeleteRange(userId, taleplerIds);
+            _talepService.DeleteRange(_user.Id, taleplerIds);
             var result = await _unitOfWork.SaveChanges();
             if (result <= 0)
             {
@@ -157,9 +142,9 @@ namespace RealEstate.Controllers
             return countsOfSatilik;
         }
 
-        public async Task<string> getByFilters(string userId, string satilikKiralik, int ilanTipi, string sirala, string search)
+        public async Task<string> getByFilters(string satilikKiralik, int ilanTipi, string sirala, string search)
         {
-            var ilanlar = await _talepService.GetByFilters(userId, satilikKiralik, ilanTipi, sirala, search);
+            var ilanlar = await _talepService.GetByFilters(_user.Id, satilikKiralik, ilanTipi, sirala, search);
             var result = JsonConvert.SerializeObject(ilanlar, Formatting.Indented,
                 new JsonSerializerSettings
                 {

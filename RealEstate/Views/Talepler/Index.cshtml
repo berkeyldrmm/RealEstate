@@ -111,9 +111,9 @@
                     Talep Sil
                 </button>
             </div>
-            <div class="d-flex justify-content-center" id="paginationContainer">
+            <div class="d-flex justify-content-center">
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination">
+                    <ul class="pagination" id="paginationContainer">
                         
                     </ul>
                 </nav>
@@ -157,8 +157,6 @@
 
 <script>
 
-    var userId="@Html.Raw((string)ViewBag.UserId)";
-
     $("#navTalep").addClass("active");
 
     function ilanSilModal() {
@@ -185,25 +183,25 @@
     }
 
     $("input:radio[name='satilikKiralik']").change(() => {
-        getByFilters(userId);
+        getByFilters();
     });
 
     $("input:radio[name='ilanTipi']").change(() => {
-        getByFilters(userId);
+        getByFilters();
     });
 
     $("input:radio[name='sirala']").change(() => {
-        getByFilters(userId);
+        getByFilters();
     });
 
     $("#search").keyup(() => {
         if ($("#search").val().length > 2 || $("#search").val().length == 0) {
-            getByFilters(userId);
+            getByFilters();
         }
     });
 
     var talepler;
-    function getByFilters(userId) {
+    function getByFilters() {
         let satilikKiralik = $("input:radio[name='satilikKiralik']:checked").val();
         let ilanTipi = $("input:radio[name='ilanTipi']:checked").val();
         let sirala = $("input:radio[name='sirala']:checked").val();
@@ -211,7 +209,6 @@
 
         $("tbody").html('<div class="show d-flex align-items-center justify-content-center w-100"><div class="spinner-border text-primary text-center" style = "width: 3rem; height: 3rem;" role = "status"><span class="sr-only" > Loading...</span></div></div>');
         $.get("https://localhost:7191/talepler/getByFilters", {
-            userId:userId,
             satilikKiralik: satilikKiralik,
             ilanTipi: ilanTipi,
             sirala: sirala,
@@ -237,32 +234,11 @@
         });
     }
 
-    //function GetTalepler(talepler) {
-    //    let html = "";
-    //    talepler.forEach(talep => {
-    //        html += `
-    //                         <tr>
-    //                             <td><input name="ilanlar" class="form-check-input" type="checkbox" value=${talep.Id}></td>
-    //                             <td>${talep.Alici.AdSoyad}</td>
-    //                             <td>${talep.TalepBaslik}</td>
-    //                             <td>${talep.IlanTalepTipi.TipAdi}</td>
-    //                             <td>${talep.Sehir}</td>
-    //                             <td>${talep.MinFiyat} TL - ${talep.MaxFiyat} TL</td>
-    //                             <td>${talep.SatilikMiKiralikMi}</td>
-    //                             <td><a class="btn btn-sm btn-primary" href="/detay/${talep.Id}">Detay</a></td>
-
-    //                         </tr>
-    //                                    `
-    //    });
-
-    //    $("tbody").html(html);
-    //}
-
     function showPageContainer(netPageCount) {
         let html = "";
         for (i = 1; i <= netPageCount; i++) {
             html += `
-                         <li class="page-item"><button type="button" onclick="showTalepler(${i})" class="page-link">${i}</button></li>
+                             <li class="page-item" style="list-style-type: none;"><button type="button" onclick="showTalepler(${i})" class="page-link">${i}</button></li>
                     `
         }
 
@@ -287,7 +263,7 @@
                                  <td>${talepler[i].Sehir}</td>
                                          <td>${talepler[i].MinFiyat} TL - ${talepler[i].MaxFiyat} TL</td>
                                  <td>${talepler[i].SatilikMiKiralikMi}</td>
-                                 <td><a class="btn btn-sm btn-primary" href="detay/${talepler[i].Id}">Detay</a></td>
+                                 <td><a class="btn btn-sm btn-primary" href="talepler/detay/${talepler[i].Id}">Detay</a></td>
 
                              </tr>
                       `
@@ -300,5 +276,5 @@
 
     }
 
-    getByFilters(userId);
+    getByFilters();
 </script>

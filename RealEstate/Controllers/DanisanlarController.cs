@@ -20,10 +20,9 @@ namespace RealEstate.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var saticilar = await _danisanService.GetDanisanlarOfUser(UserId);
-            return View(saticilar);
+            return View();
         }
 
         [HttpPost]

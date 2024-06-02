@@ -66,15 +66,15 @@
                 </div>
             </nav>
             <div class="button-group mt-auto" style="position:absolute; bottom:60px;">
-                <a href="https://parselsorgu.tkgm.gov.tr/" class="btn mx-2" style="width:90%; background-color:#ff6700; color:#ffffff" target="_blank"><img src="~/img/tkg.png" width="26px" /> KGM Parsel sorgulama</a>
-                <a href="https://webtapu.tkgm.gov.tr/" class="btn btn-info mt-3 mx-2 pr-2" style="width:90%; background-color:#012a4a; color:#ffffff" target="_blank"><img src="~/img/tkg.png" width="26px" />KGM Web Tapu</a>
+                <a href="https://parselsorgu.tkgm.gov.tr/" class="btn mx-2" style="width:93%; background-color:#ff6700; color:#ffffff" target="_blank"><img src="~/img/tkg.png" width="22px" /> TKGM Parsel sorgulama</a>
+                <a href="https://webtapu.tkgm.gov.tr/" class="btn btn-info mt-3 mx-2 pr-2" style="width:93%; background-color:#012a4a; color:#ffffff" target="_blank"><img src="~/img/tkg.png" width="26px" />TKGM Web Tapu</a>
             </div>
         </div>
         <!-- Sidebar End -->
         <!-- Content Start -->
         <div class="content">
             <!-- Navbar Start -->
-            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0" style="height:64px;">
                 <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
                 </a>
@@ -83,73 +83,13 @@
                 </a>
                 
                 <div class="navbar-nav align-items-center ms-auto">
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-envelope me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">Message</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item text-center">See all message</a>
-                        </div>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-bell me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">Notification</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">Profile updated</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">New user added</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <h6 class="fw-normal mb-0">Password changed</h6>
-                                <small>15 minutes ago</small>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item text-center">See all notifications</a>
-                        </div>
-                    </div>
                     <div class="nav-item" style="margin-left:15px;">
-                        <a href="/login/changepassword" style="color: #4CB9E7;text-decoration: none; border:none;">
+                        <a class="btn" href="/login/changepassword" style="background-color: #4CB9E7; color:#ffffff;  border-radius:10px;">
                             Şifre değiştir
                         </a>
                     </div>
                     <div class="nav-item" style="margin-left:15px;">
-                        <button style="color: #4CB9E7;text-decoration: none; border:none;" onclick="signOutModal()">
+                        <button class="btn" id="logOut" style="background-color: #003049;text-decoration: none; border-radius:10px; color:#ffffff" onclick="signOutModal()">
                             Çıkış yap
                         </button>
                     </div>
@@ -164,7 +104,7 @@
         <!-- Content End -->
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-        <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal" id="logOutModel" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -225,6 +165,10 @@
         }
 
         $("#nameSurname").html(localStorage.getItem("realEstateNameSurname"));
+        
+        $("#logOutModel").on('shown.bs.modal', function () {
+            $('#logOut').trigger('focus')
+        });
     </script>
 </body>
 </html>

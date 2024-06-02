@@ -8,14 +8,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using RealEstate.Extensions;
 using RealEstate.Middlewares;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.DependenciesContainer();
-builder.Services.AddDbContext<RealEstateDBContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:SqlServer"],
+builder.Services.AddDbContext<RealEstateDBContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:SqlServerDevelopment"],
                 sqlServerOptionsAction: sqlOptions =>
                 {
                     sqlOptions.EnableRetryOnFailure(

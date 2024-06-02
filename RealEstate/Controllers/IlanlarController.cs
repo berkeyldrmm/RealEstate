@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Abstract;
+﻿using AutoMapper;
+using BusinessLayer.Abstract;
 using DTOLayer;
 using EntityLayer.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -26,7 +27,6 @@ namespace RealEstate.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.UserId = UserId;
             return View();
         }
 
@@ -245,14 +245,31 @@ namespace RealEstate.Controllers
             return countsOfSatilik;
         }
 
-        public async Task<string> getByFilters(string userId, string satilikKiralik, int ilanTipi, string satisDurumu, string minFiyat, string maxFiyat, string sirala, string search)
+        public async Task<string> getByFilters(string satilikKiralik, int ilanTipi, string satisDurumu, string minFiyat, string maxFiyat, string sirala, string search)
         {
-            var ilanlar = await _ilanService.GetByFilters(userId, satilikKiralik, ilanTipi, satisDurumu, minFiyat, maxFiyat, sirala, search);
-            var result = JsonConvert.SerializeObject(ilanlar, Formatting.Indented,
-                new JsonSerializerSettings
+            IEnumerable<Ilan> ilanlar = await _ilanService.GetByFilters(UserId, satilikKiralik, ilanTipi, satisDurumu, minFiyat, maxFiyat, sirala, search);
+
+            List<IlanlarSayfasiDTO> ilanlarSayfasiData = new List<IlanlarSayfasiDTO>();
+            foreach (var ilan in ilanlar)
+            {
+                IlanlarSayfasiDTO ilanItem = new IlanlarSayfasiDTO
                 {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                });
+                    Id = ilan.Id,
+                    IlanBaslik = ilan.IlanBaslik,
+                    IlanTipi = ilan.IlanTalepTipi.TipAdi,
+                    Kazanc = ilan.Kazanc.ToString(),
+                    Komisyon = ilan.Komisyon.ToString(),
+                    Mahalle = ilan.Mahalle,
+                    PortfoyFiyati = ilan.PortfoyFiyati.ToString(),
+                    SaticiAdi = ilan.Satici.AdSoyad,
+                    SatilikMiKiralikMi = ilan.SatilikMiKiralikMi,
+                    SatisDurumu = ilan.SatisDurumu,
+                    Sehir = ilan.Sehir,
+                    Semt = ilan.Semt
+                };
+                ilanlarSayfasiData.Add(ilanItem);
+            }
+            var result = JsonConvert.SerializeObject(ilanlarSayfasiData);
             return result;
         }
     }
